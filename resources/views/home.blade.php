@@ -4,7 +4,7 @@
 <header class="py-5 bg-light border-bottom mb-4">
     <div class="container">
         <div class="text-center my-5">
-            <h1 class="fw-bolder">{{ Auth::user()->name }}, Welcome to The Forum Project!</h1>
+            <h1 class="fw-bolder">@if(Auth::check()){{ Auth::user()->name }}@endif, Welcome to The Forum Project!</h1>
             <p class="lead mb-0">This forum was created by the amazing programming team Gonzalo & Lourdes</p>
         </div>
     </div>

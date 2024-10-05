@@ -14,8 +14,31 @@ class PostController extends Controller
     }
 
     public function show($post){
-         $post= Post::findorFail($post);
+         $post= Post::where('id',$post)->with([
+            'categories',
+            'users',
+            'comments.children',
+
+         ])->first();
          return view("posts.show", compact('post'));
         // return view("posts.show");
+    }
+
+    public function create(){
+        return view("posts.create");
+    }
+
+    public function store(Request $request){
+        $request->validate([
+            'content' =>"required",
+            'title' =>'required'
+        ]);
+        // dd($request);
+        $post = new Post();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        //$post->post_state = "active";
+        $post->save();
+        return redirect()->route('posts.index')->with('success','Discucion creada con éxito.');
     }
 }
