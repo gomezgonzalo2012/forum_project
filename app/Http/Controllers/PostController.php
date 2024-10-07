@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
     public function index(){
-        $posts = Post::orderBy("created_at","desc")->get();
+        $post = Post::orderBy("created_at","desc")
+        ->with(["comments"])->get();
+        $categories = Category::take(4)->get();
 
+        $posts = [$post, $categories];
         return view("home", compact('posts'));
     }
 

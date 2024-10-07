@@ -15,8 +15,12 @@
         <div class="row">
             <!-- Blog entries-->
             <div class="col-lg-8">
-                @foreach ($posts as $post)
-                <x-post-card
+                @php
+                    $postList = $posts[0];
+                    $categories = $posts[1];
+                @endphp
+                @foreach ($postList as $post)
+                <x-posts.post-card
                     link="{{route('posts.show',['post'=>$post->id])}}"
                     image="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
                     {{-- date={{$item->created_at}}
@@ -25,6 +29,7 @@
                     date="{{ $post->created_at->format('F j, Y') }}"
                     title="{{ $post->title }}"
                     content="{{ $post->content }}"
+                    comments="{{count($post->comments)}}"
                 />
                 @endforeach
 
@@ -58,27 +63,12 @@
                     </div>
                 </div>
                 <!-- Categories widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Categories</div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">Web Design</a></li>
-                                    <li><a href="#!">HTML</a></li>
-                                    <li><a href="#!">Freebies</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-sm-6">
-                                <ul class="list-unstyled mb-0">
-                                    <li><a href="#!">JavaScript</a></li>
-                                    <li><a href="#!">CSS</a></li>
-                                    <li><a href="#!">Tutorials</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                <x-categories.categories-card
+
+                    :categories="$categories"
+                 />
+
                 <!-- Side widget-->
                 <div class="card mb-4">
                     <div class="card-header">Side Widget</div>

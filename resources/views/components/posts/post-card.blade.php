@@ -6,6 +6,6 @@
         <div class="small text-muted">{{ $date }}</div>
         <h2 class="card-title">{{ $title }}</h2>
         <p class="card-text">{{ $content }}</p>
-        <a class="btn btn-primary" href="{{ $link }}">See comments→</a>
+        <a class="btn btn-primary" href="{{ $link }}">See {{$comments}} comments→</a>
     </div>
 </div>
