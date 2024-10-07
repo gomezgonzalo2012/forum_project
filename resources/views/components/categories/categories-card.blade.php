@@ -6,6 +6,7 @@
                 <ul class="list-unstyled mb-0">
                     @foreach ( $categories as $category)
                     <li><a href="#!">{{$category->name}}</a></li>
+                    {{-- enlace a controlador de categorias --}}
                     @endforeach
                 </ul>
             </div>

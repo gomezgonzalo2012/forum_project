@@ -13,7 +13,7 @@
                     <h3 class="fw-bolder mb-1">{{$post->title}}</h3>
 
                     <!-- Post content-->
-                    <div class="text-muted fst-italic mb-2">Posted on  {{ $post->created_at->format('F j, Y') }}</div>
+                    <div class="text-muted fst-italic mb-2">Posted on  {{ $post->created_at->format('F j, Y') }} by {{--$post->user->name--}}</div>
                     <!-- Post categories-->
                     @foreach ($post->categories as $category)
                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{$category->name}}</a>
@@ -33,25 +33,31 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <!-- Comment form-->
-                        <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
-                        <!-- Comment with nested comments-->
 
-                            <!-- Parent comment-->
-                            @foreach ($post->comments as $comment)
-                            <div class="d-flex">
-                                 @component('components.comments.comment-box', ['comment' => $comment])
+                        <form class="mb-4" action="{{route("comments.store")}}" method="POST">
+                            @csrf
+                            <!-- Textarea que dispara el collapse al hacer clic -->
+                            <textarea class="form-control" data-bs-toggle="collapse" href="#collapseExample" role="button" placeholder="leave a comment" aria-expanded="false" aria-controls="collapseExample" rows="3" name ="content"></textarea>
+                            <input type="hidden" name="user_id" value="@if(Auth::check()){{ Auth::user()->id }}@endif">
+                            <input type="hidden" name="post_id" value="{{$post->id}}">
+
+                            <!-- Contenedor que muestra el botón de comentar al hacer clic -->
+                            <div class="collapse py-3" id="collapseExample">
+                                <div class="d-flex justify-content-end"> <!-- Flexbox para alinear el botón a la derecha -->
+                                    <button class="btn btn-primary" type="submit"> <!-- Cambia type="button" a type="submit" -->
+                                        Comentar
+                                    </button>
+                                </div>
                             </div>
+                        </form>
 
+                        <!-- Itera sobre los comentarios principales del post -->
+                        @foreach ($post->comments as $comment)
+                        <!-- Pasa el array 'renderedComments' vacío inicialmente a cada comentario principal -->
+                            @component('components.comments.comment-box', ['comment' => $comment, 'renderedComments' => []])
                             @endcomponent
-                            @endforeach
-                        <!-- Single comment-->
-                        <div class="d-flex">
-                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
-                            <div class="ms-3">
-                                <div class="fw-bold">Commenter Name</div>
-                                When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
-                            </div>
-                        </div>
+                        @endforeach
+
                     </div>
                 </div>
             </section>

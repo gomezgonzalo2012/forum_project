@@ -4,13 +4,13 @@
 <header class="py-5 bg-light border-bottom mb-4">
     <div class="container">
         <div class="text-center my-5">
-            <h1 class="fw-bolder">@if(Auth::check()){{ Auth::user()->name }}@endif, Welcome to The Forum Project!</h1>
+            <h1 class="fw-bolder">@if(Auth::check()){{ Auth::user()->name }}@endif Welcome to The Forum Project!</h1>
             <p class="lead mb-0">This forum was created by the amazing programming team Gonzalo & Lourdes</p>
         </div>
     </div>
 </header>
     <!-- Page content-->
-    <br>
+
     <div class="container">
         <div class="row">
             <!-- Blog entries-->
@@ -23,10 +23,8 @@
                 <x-posts.post-card
                     link="{{route('posts.show',['post'=>$post->id])}}"
                     image="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
-                    {{-- date={{$item->created_at}}
-                    title={{$item->title}}
-                    content={{$item->content}} --}}
                     date="{{ $post->created_at->format('F j, Y') }}"
+                    {{-- name="{{$post->user->name}}" --}}
                     title="{{ $post->title }}"
                     content="{{ $post->content }}"
                     comments="{{count($post->comments)}}"

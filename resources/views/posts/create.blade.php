@@ -14,22 +14,17 @@
 
                             @csrf
 
-                            <!-- Name input -->
+                            <!-- title input -->
                             <div class="mb-3">
                               <label class="form-label" for="title">Titulo</label>
                               <input class="form-control" id="title" type="text" name="title" placeholder="" data-sb-validations="required" />
                               <div class="invalid-feedback" data-sb-feedback="title:required">Titulo is required.</div>
+                            <!---- user input -->
+                            <input type="hidden" name="user_id" value="@if(Auth::check()){{ Auth::user()->id }}@endif">
+
                             </div>
 
-                            {{-- <!-- Email address input -->
-                            <div class="mb-3">
-                              <label class="form-label" for="emailAddress"> Categorias</label>
-                              <input class="form-control" id="emailAddress" type="text" placeholder="seleccione categorias" data-sb-validations="required, email" />
-                              <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Email Address is required.</div>
-                              <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
-                            </div> --}}
-
-                            <!-- Message input -->
+                            <!-- content input -->
                             <div class="mb-3">
                               <label class="form-label" for="content">Contenido</label>
                               <textarea class="form-control" id="content" type="text" name="content" placeholder="" style="height: 10rem;" data-sb-validations="required"></textarea>
