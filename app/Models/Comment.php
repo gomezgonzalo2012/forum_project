@@ -24,7 +24,7 @@ class Comment extends Model
     }
 
     public function parent(){ // para acceder al comentario padre
-        return $this->belonsTo(Comment::class, 'father_comment_id');
+        return $this->belongsTo(Comment::class, 'father_comment_id');
     }
 
 }

@@ -27,7 +27,6 @@ class CommentController extends Controller
     public function storeChild(Request $request ){
         //dd($request->post_id);
         //dd($request->user_id);
-
         $request->validate([
             'content' =>'required',
             'user_id'=>'required',
@@ -40,9 +39,6 @@ class CommentController extends Controller
         $comment->user_id = $request->user_id;
         $comment->post_id = $request->post_id;
         $comment->father_comment_id= $request->father_comment_id;
-
-
-
         $comment->save();
         return redirect()->route('posts.show',$comment->post_id)->with('success','Comentario creado con éxito.');
     }
