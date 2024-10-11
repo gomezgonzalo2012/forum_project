@@ -1,13 +1,18 @@
 @props(['comment', 'renderedComments' => []])
 
 @php
-    // Si este comentario ya fue renderizado, no lo mostramos
-    if (in_array($comment->id, $renderedComments)) {
-        return;
-    }
+    // // Si este comentario ya fue renderizado, no lo mostramos
+    // if (in_array($comment->id, $renderedComments)) {
+    //     return;
+    // }
 
     // Agregamos el ID del comentario al array de comentarios ya renderizados
-    $renderedComments[] = $comment->id;
+    // $renderedComments[] = $comment->id;
+    // @dump( $renderedComments);
+
+    foreach ($renderedComments as $id) {
+        print($id);
+    }
 @endphp
 
 <!-- Componente de comentario -->
@@ -54,15 +59,19 @@
             <!-- Recorrido de los subcomentarios -->
             @foreach($comment->children as $childComment)
                 <!-- Verificación para evitar mostrar comentarios duplicados -->
+                @if($childComment->parent->id == $comment->id)
                 @if(!in_array($childComment->id, $renderedComments))
                     {{-- @dd($renderedComments[0]); --}}
 
                     <div class="d-flex mt-2">
                         <!-- Incluimos nuevamente el componente de comentario, pasando los comentarios ya renderizados -->
-                        @component('components.comments.comment-box', ['comment' => $childComment, 'renderedComments' => $renderedComments])
-                        @endcomponent
+                        @include("components.comments.comment-box", ['comment' => $childComment, 'renderedComments' => $renderedComments])
+                        {{-- @component('components.comments.comment-box', ['comment' => $childComment, 'renderedComments' => $renderedComments])
+                        @endcomponent --}}
                     </div>
                 @endif
+                @endif
+
             @endforeach
         </div>
     @endif

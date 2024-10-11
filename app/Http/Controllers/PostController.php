@@ -12,10 +12,10 @@ class PostController extends Controller
         $post = Post::orderBy("created_at","desc")
         ->with(["comments"])->get();
 
-        $categories = Category::take(4)->get();
+       // $categories = Category::take(4)->get();
 
-        $posts = [$post, $categories];
-        return view("home", compact('posts'));
+        //$posts = [$post, $categories];
+        return view("home", compact('post'));
     }
 
     public function show($post){ // $post = id
@@ -26,7 +26,8 @@ class PostController extends Controller
 
          ])->first();
          //dd($post->user);
-         return view("posts.show", compact('post'));
+         $renderedComments[] = [];
+         return view("posts.show", compact('post',"renderedComments"));
         // return view("posts.show");
     }
 

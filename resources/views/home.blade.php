@@ -16,18 +16,18 @@
             <!-- Blog entries-->
             <div class="col-lg-8">
                 @php
-                    $postList = $posts[0];
-                    $categories = $posts[1];
+                    // $postList = $posts[0];
+                    // $categories = $posts[1];
                 @endphp
-                @foreach ($postList as $post)
+                @foreach ($post as $p)
                 <x-posts.post-card
-                    link="{{route('posts.show',['post'=>$post->id])}}"
+                    link="{{route('posts.show',['post'=>$p->id])}}"
                     image="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
-                    date="{{ $post->created_at->format('F j, Y') }}"
+                    date="{{ $p->created_at->format('F j, Y') }}"
                     {{-- name="{{$post->user->name}}" --}}
-                    title="{{ $post->title }}"
-                    content="{{ $post->content }}"
-                    comments="{{count($post->comments)}}"
+                    title="{{ $p->title }}"
+                    content="{{ $p->content }}"
+                    comments="{{count($p->comments)}}"
                 />
                 @endforeach
 

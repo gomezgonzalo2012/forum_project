@@ -54,9 +54,11 @@
                         <!-- Itera sobre los comentarios principales del post -->
                         @foreach ($post->comments as $comment)
                         <!-- Pasa el array 'renderedComments' vacío inicialmente a cada comentario principal -->
-                            @component('components.comments.comment-box', ['comment' => $comment, 'renderedComments' => []])
-                            @endcomponent
+
+                                @include('components.comments.comment-box', ['comment' => $comment, 'renderedComments' => []])
+
                         @endforeach
+
 
                     </div>
                 </div>
