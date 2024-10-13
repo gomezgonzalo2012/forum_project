@@ -10,10 +10,9 @@
                 <!-- Post header-->
                 <header class="mb-4">
                     <!-- Post title-->
-                    <h3 class="fw-bolder mb-1">{{$post->title}}</h3>
-
+                    <h3 class="fw-bolder ">{{$post->title}}</h3>
                     <!-- Post content-->
-                    <div class="text-muted fst-italic mb-2">Posted on  {{ $post->created_at->format('F j, Y') }} by {{--$post->user->name--}}</div>
+                    <div class="text-muted fst-italic mb-2">Posted on  {{ $post->created_at->diffForHumans()}} by {{ $post->user->name }}</div>
                     <!-- Post categories-->
                     @foreach ($post->categories as $category)
                     <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{$category->name}}</a>
@@ -24,7 +23,7 @@
                 {{-- <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure> --}}
                 <!-- Post content-->
                 <section class="mb-5  card card-body">
-                    <p class="fs-5 mb-4"> {{$post->content}}</p>
+                    <p class="fs-5 mb-4"> {!!$post->content!!}</p>
 
                 </section>
             </article>
@@ -33,7 +32,7 @@
                 <div class="card bg-light">
                     <div class="card-body">
                         <!-- Comment form-->
-
+                        @auth
                         <form class="mb-4" action="{{route("comments.store")}}" method="POST">
                             @csrf
                             <!-- Textarea que dispara el collapse al hacer clic -->
@@ -44,12 +43,17 @@
                             <!-- Contenedor que muestra el botón de comentar al hacer clic -->
                             <div class="collapse py-3" id="collapseExample">
                                 <div class="d-flex justify-content-end"> <!-- Flexbox para alinear el botón a la derecha -->
-                                    <button class="btn btn-primary" type="submit"> <!-- Cambia type="button" a type="submit" -->
+                                    <button class="btn btn-success" type="submit"> <!-- Cambia type="button" a type="submit" -->
                                         Comentar
                                     </button>
                                 </div>
                             </div>
                         </form>
+                        @else
+                        <a href="{{route('login')}}" class="btn btn-primary"> Inicia sesión para comentar.</a>
+                        @endauth
+
+
 
                         <!-- Itera sobre los comentarios principales del post -->
                         @foreach ($post->comments as $comment)
@@ -59,7 +63,7 @@
 
                         @endforeach
 
-
+                        {{-- {{$post->comments->paginate(3)->links()}} --}}
                     </div>
                 </div>
             </section>
@@ -77,27 +81,9 @@
                 </div>
             </div>
             <!-- Categories widget-->
-            <div class="card mb-4">
-                <div class="card-header">Categories</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">Web Design</a></li>
-                                <li><a href="#!">HTML</a></li>
-                                <li><a href="#!">Freebies</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6">
-                            <ul class="list-unstyled mb-0">
-                                <li><a href="#!">JavaScript</a></li>
-                                <li><a href="#!">CSS</a></li>
-                                <li><a href="#!">Tutorials</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <x-categories.categories-card
+               :categories="$categories"
+            />
             <!-- Side widget-->
             <div class="card mb-4">
                 <div class="card-header">Side Widget</div>
@@ -106,4 +92,6 @@
         </div>
     </div>
 </div>
+
 @endsection
+

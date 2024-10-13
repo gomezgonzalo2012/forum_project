@@ -10,7 +10,8 @@ class PostController extends Controller
 {
     public function index(){
         $post = Post::orderBy("created_at","desc")
-        ->with(["comments"])->get();
+        ->with(["comments","user"])->paginate(10);
+        // dd($post);
 
        // $categories = Category::take(4)->get();
 
@@ -36,17 +37,22 @@ class PostController extends Controller
     }
 
     public function store(Request $request){
+        //dd($request->content);
         $request->validate([
             'content' =>"required",
-            'title' =>'required'
+            'title' =>'required',
+            'category' =>'required|array'
         ]);
-        // dd($request);
+         //dd($request);
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
         $post->user_id= $request->user_id;
         //$post->post_state = "active";
         $post->save();
+        $post->categories()->sync($request->category); // asocia la categoria al post
+        session()->flash("success"," Discucion creada");
+
         return redirect()->route('posts.index')->with('success','Discucion creada con éxito.');
     }
 }

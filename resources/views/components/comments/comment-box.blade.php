@@ -14,22 +14,35 @@
         print($id);
     }
 @endphp
-
+{{-- <div class="d-flex justify-content-between">
+    <div class="">
+         <strong class="ml-2">{{$user}}</strong>
+    </div>
+    <div>
+     <a class="btn btn-secondary btn-sm" href="{{ $link }}">Ver más</a>
+    </div>
+</div> --}}
 <!-- Componente de comentario -->
 <div class="mb-4">
-    <div class="d-flex mb-2">
+    <div class="mb-2">
         <!-- Imagen de usuario -->
-        <div class="flex-shrink-0">
-            <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="User Avatar" />
+        <div class="d-flex justify-content-start">
+            <div>
+            <img src="{{asset('assets/icons8-usuario-masculino-en-círculo-48.png')}}" width="25px" height="25px" style="border-radius:50%" alt="profile image">
+
+            </div>
+
+            <div class="ms-1">{{ $comment->user->name }}</div>
+
+
         </div>
         <!-- Contenido del comentario -->
         <div class="ms-3 flex-grow-1">
-            <div class="fw-bold">{{ $comment->user->name }}</div>
             <div>{{ $comment->content }}</div>
             <div class="d-flex justify-content-end">
                 <!-- Enlace para mostrar el área de comentario -->
-                <a type="button" class="form-control btn btn-link" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">
-                    Responder
+                <a type="button" class="" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">
+                <i class="bi bi-reply-fill">Añadir comentario</i>
                 </a>
             </div>
 
@@ -55,7 +68,7 @@
 
     <!-- Verificación de comentarios hijos -->
     @if($comment->children->isNotEmpty())
-        <div class="ms-5"> <!-- Desplazamiento hacia la derecha para los subcomentarios -->
+        <div class="ms-4"> <!-- Desplazamiento hacia la derecha para los subcomentarios -->
             <!-- Recorrido de los subcomentarios -->
             @foreach($comment->children as $childComment)
                 <!-- Verificación para evitar mostrar comentarios duplicados -->

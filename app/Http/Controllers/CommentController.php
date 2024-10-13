@@ -22,7 +22,7 @@ class CommentController extends Controller
         $comment->post_id = $request->post_id;
 
         $comment->save();
-        return redirect()->route('posts.show',$comment->post_id)->with('success','Comentario creado con éxito.');
+        return redirect()->back();
     }
     public function storeChild(Request $request ){
         //dd($request->post_id);
@@ -40,6 +40,6 @@ class CommentController extends Controller
         $comment->post_id = $request->post_id;
         $comment->father_comment_id= $request->father_comment_id;
         $comment->save();
-        return redirect()->route('posts.show',$comment->post_id)->with('success','Comentario creado con éxito.');
+        return redirect()->back();
     }
 }

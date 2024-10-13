@@ -4,7 +4,11 @@
 <header class="py-5 bg-light border-bottom mb-4">
     <div class="container">
         <div class="text-center my-5">
-            <h1 class="fw-bolder">@if(Auth::check()){{ Auth::user()->name }}@endif Welcome to The Forum Project!</h1>
+            @if(Auth::check())
+            <h1 class="fw-bolder">Hi! {{ Auth::user()->name }}, Welcome to The Forum Project!</h1>
+            @else
+            <h1 class="fw-bolder">Welcome to The Forum Project!</h1>
+            @endif
             <p class="lead mb-0">This forum was created by the amazing programming team Gonzalo & Lourdes</p>
         </div>
     </div>
@@ -13,8 +17,17 @@
 
     <div class="container">
         <div class="row">
+            <div class="d-flex justify-content-end mb-3">
+            @auth
+                <a href="{{route('posts.create')}}" class="btn btn-primary">Crear discusión</a>
+                @else
+                <a href="{{route('login')}}" class="btn btn-primary"> Inicia sesión y crear una discusión</a>
+            @endauth
+        </div>
+
             <!-- Blog entries-->
             <div class="col-lg-8">
+
                 @php
                     // $postList = $posts[0];
                     // $categories = $posts[1];
@@ -24,10 +37,10 @@
                     link="{{route('posts.show',['post'=>$p->id])}}"
                     image="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
                     date="{{ $p->created_at->format('F j, Y') }}"
-                    {{-- name="{{$post->user->name}}" --}}
+                    user="{{ $p->user ? $p->user->name : 'Usuario desconocido' }}"
                     title="{{ $p->title }}"
-                    content="{{ $p->content }}"
-                    comments="{{count($p->comments)}}"
+                    {{-- content="{!! $p->content !!}" --}}
+                    commentsAmount="{{count($p->comments)}}"
                 />
                 @endforeach
 
@@ -36,30 +49,14 @@
 
                 <!-- Pagination-->
                 <nav aria-label="Pagination">
-                    <hr class="my-0" />
-                    <ul class="pagination justify-content-center my-4">
-                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                    </ul>
+                    {{$post->links()}}
                 </nav>
             </div>
+
+
             <!-- Side widgets-->
             <div class="col-lg-4">
-                <!-- Search widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Search</div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                        </div>
-                    </div>
-                </div>
+
                 <!-- Categories widget-->
 
                 <x-categories.categories-card
@@ -69,10 +66,16 @@
 
                 <!-- Side widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Side Widget</div>
-                    <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+                    <div class="card-header">Más Populares</div>
+                    @foreach ($popularPosts as $pop )
+                    <div class="ms-3">
+                        <p><a href="{{route('posts.show',['post'=>$pop->id])}}" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">{{$pop->title}}</a></p>
+                    </div>
+                    @endforeach
+
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
