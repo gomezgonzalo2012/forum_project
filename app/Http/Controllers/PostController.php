@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -20,15 +21,20 @@ class PostController extends Controller
     }
 
     public function show($post){ // $post = id
-         $post= Post::where('id',$post)->with([
+         $postContent= Post::where('id',$post)->with([
             'categories',
             'user',
-            'comments.children',
 
          ])->first();
          //dd($post->user);
-         $renderedComments[] = [];
-         return view("posts.show", compact('post',"renderedComments"));
+         $comments = Comment::where('post_id', $post)
+                        ->whereNull('father_comment_id')
+                        ->with('children') // Cargar subcomentarios
+                        ->get();
+
+        $postShow= [$postContent, $comments];
+
+         return view("posts.show", compact('postShow'));
         // return view("posts.show");
     }
 
@@ -37,7 +43,6 @@ class PostController extends Controller
     }
 
     public function store(Request $request){
-        //dd($request->content);
         $request->validate([
             'content' =>"required",
             'title' =>'required',
@@ -49,6 +54,8 @@ class PostController extends Controller
         $post->content = $request->content;
         $post->user_id= $request->user_id;
         //$post->post_state = "active";
+        // dd($post);
+
         $post->save();
         $post->categories()->sync($request->category); // asocia la categoria al post
         session()->flash("success"," Discucion creada");

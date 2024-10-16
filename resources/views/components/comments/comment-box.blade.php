@@ -2,12 +2,12 @@
 
 @php
     // // Si este comentario ya fue renderizado, no lo mostramos
-    // if (in_array($comment->id, $renderedComments)) {
-    //     return;
-    // }
+    if (in_array($comment->id, $renderedComments)) {
+        return;
+    }
 
-    // Agregamos el ID del comentario al array de comentarios ya renderizados
-    // $renderedComments[] = $comment->id;
+   // Agregamos el ID del comentario al array de comentarios ya renderizados
+    $renderedComments[] = $comment->id;
     // @dump( $renderedComments);
 
     foreach ($renderedComments as $id) {
@@ -42,23 +42,21 @@
             <div class="d-flex justify-content-end">
                 <!-- Enlace para mostrar el área de comentario -->
                 <a type="button" class="" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">
-                <i class="bi bi-reply-fill">Añadir comentario</i>
-                </a>
+                <i class="bi bi-reply-fill"></i>
+                </a> reply
             </div>
 
-            <!-- Área de respuesta oculta por defecto -->
-            <div class="collapse py-3" id="collapseComment{{ $comment->id }}">
+            <div class="collapse py-2" id="collapseComment{{ $comment->id }}">
                 <form method="POST" action="{{ route('comments.storeChild') }}">
                     @csrf
                     <textarea class="form-control mb-2" name="content" rows="2" placeholder="Escribe tu respuesta aquí..."></textarea>
-                    <!-- Campos ocultos para identificar el usuario y la relación con el comentario superior -->
                     <input type="hidden" name="user_id" value="@if(Auth::check()){{ Auth::user()->id }}@endif">
                     <input type="hidden" name="father_comment_id" value="{{ $comment->id }}">
                     <input type="hidden" name="post_id" value="{{ $comment->post_id }}">
 
-                    <div class="d-flex justify-content-end"> <!-- Flexbox para alinear el botón a la derecha -->
+                    <div class="d-flex justify-content-end">
                         <button class="btn btn-primary" type="submit">
-                            Comentar
+                            Comment
                         </button>
                     </div>
                 </form>
@@ -76,7 +74,8 @@
                 @if(!in_array($childComment->id, $renderedComments))
                     {{-- @dd($renderedComments[0]); --}}
 
-                    <div class="d-flex mt-2">
+                    <div class=" mt-2">
+
                         <!-- Incluimos nuevamente el componente de comentario, pasando los comentarios ya renderizados -->
                         @include("components.comments.comment-box", ['comment' => $childComment, 'renderedComments' => $renderedComments])
                         {{-- @component('components.comments.comment-box', ['comment' => $childComment, 'renderedComments' => $renderedComments])

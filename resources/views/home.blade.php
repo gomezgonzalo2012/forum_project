@@ -27,11 +27,6 @@
 
             <!-- Blog entries-->
             <div class="col-lg-8">
-
-                @php
-                    // $postList = $posts[0];
-                    // $categories = $posts[1];
-                @endphp
                 @foreach ($post as $p)
                 <x-posts.post-card
                     link="{{route('posts.show',['post'=>$p->id])}}"
