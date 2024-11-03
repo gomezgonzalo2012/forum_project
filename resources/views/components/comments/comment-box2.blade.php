@@ -1,6 +1,6 @@
 @foreach($childcomments as $child)
 <div class="mb-4 ms-4">
-    <div class=" m-2">
+    <div class="m-2">
         <!-- Imagen de usuario -->
         <div >{{ $child->content }}</div>
 
@@ -48,7 +48,7 @@
 
         <!-- Recursivamente mostramos las respuestas -->
         @if($child->children->isNotEmpty())
-            <div class="replies ml-4">
+            <div class="replies ml-4 ms-4">
                 @include('components.comments.comment-box2', ['childcomments' => $child->children])
             </div>
         @endif

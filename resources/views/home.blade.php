@@ -17,37 +17,20 @@
 
     <div class="container">
         <div class="row">
-            <div class="d-flex justify-content-end mb-3">
-            @auth
-                <a href="{{route('posts.create')}}" class="btn btn-primary">Crear discusión</a>
-                @else
-                <a href="{{route('login')}}" class="btn btn-primary"> Inicia sesión y crear una discusión</a>
-            @endauth
-        </div>
-
-            <!-- Blog entries-->
             <div class="col-lg-8">
-                @foreach ($post as $p)
-                <x-posts.post-card
-                    link="{{route('posts.show',['post'=>$p->id])}}"
-                    image="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
-                    date="{{ $p->created_at->format('F j, Y') }}"
-                    user="{{ $p->user ? $p->user->name : 'Usuario desconocido' }}"
-                    title="{{ $p->title }}"
-                    {{-- content="{!! $p->content !!}" --}}
-                    commentsAmount="{{count($p->comments)}}"
-                />
-                @endforeach
-
-
-                <!-- Nested row for non-featured blog posts-->
-
-                <!-- Pagination-->
-                <nav aria-label="Pagination">
-                    {{$post->links()}}
-                </nav>
+                <!-- Blog entries-->
+                <div class="accordion" id="accordionExample">
+                    {{-- <div class="row"> --}}
+                            @foreach ($topics as $topic)
+                                <x-topics.topic-item
+                                description="{{$topic->description}}"
+                                link="{{route('topics.index',['id'=>$topic->id])}}"
+                                postCount="3" >
+                                </x-topics.topic-item>
+                            @endforeach
+                    {{-- </div> --}}
+                </div>
             </div>
-
 
             <!-- Side widgets-->
             <div class="col-lg-4">
@@ -61,11 +44,26 @@
 
                 <!-- Side widget-->
                 <div class="card mb-4">
-                    <div class="card-header">Más Populares</div>
+                    <div class="card-header"> Post más Populares</div>
                     @foreach ($popularPosts as $pop )
-                    <div class="ms-3">
-                        <p><a href="{{route('posts.show',['post'=>$pop->id])}}" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">{{$pop->title}}</a></p>
-                    </div>
+                            <div class="card mb-3 border-0 border-bottom">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <!-- Icono de tema y título -->
+                                            {{-- <h5 class="card-title mb-1"> --}}
+                                                <i class="bi bi-eye"></i>
+                                                <p><a href="{{route('posts.show',['post'=>$pop->id])}}" class="text-dark text-decoration-none">{{$pop->title}}</a></p>
+                                            {{-- </h5> --}}
+                                        </div>
+                                        <div class="text-end">
+                                            <!-- Contador de respuestas y fecha de actividad -->
+                                            <div class="text-muted small">replies</div>
+                                            <div class="text-muted small"> fecha Actividad</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     @endforeach
 
                 </div>

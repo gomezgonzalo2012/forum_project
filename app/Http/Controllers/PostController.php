@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -42,17 +43,35 @@ class PostController extends Controller
         return view("posts.create");
     }
 
+    public function createWithTopic(Request $request)
+    {
+        $topic_id = $request->query('topic_id');
+        $topic = Topic::find($topic_id);
+
+        // Verificar si el tema existe
+        if (!$topic) {
+            return redirect()->back()->with('error', 'El tema no existe.');
+        }
+        // dd($topic->id);
+        return view('posts.create', compact('topic'));
+    }
+
+    // public function createWithTopic($topic_id){
+    //     return view('posts.create', compact('topic_id'));
+    // }
     public function store(Request $request){
         $request->validate([
             'content' =>"required",
             'title' =>'required',
-            'category' =>'required|array'
+            'category' =>'required|array',
+            'topic_id' =>'required'
         ]);
-         //dd($request);
+        //  dd($request);
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
         $post->user_id= $request->user_id;
+        $post->topic_id= $request->topic_id;
         //$post->post_state = "active";
         // dd($post);
 
@@ -60,6 +79,6 @@ class PostController extends Controller
         $post->categories()->sync($request->category); // asocia la categoria al post
         session()->flash("success"," Discucion creada");
 
-        return redirect()->route('posts.index')->with('success','Discucion creada con éxito.');
+        return redirect()->route('Home.index')->with('success','Discucion creada con éxito.');
     }
 }

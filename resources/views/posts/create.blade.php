@@ -29,9 +29,16 @@
                               <input class="form-control" id="title" type="text" name="title" placeholder="" data-sb-validations="required" />
                               <div class="invalid-feedback" data-sb-feedback="title:required">Titulo is required.</div>
                             <!---- user input -->
-                            <input type="hidden" name="user_id" value="@if(Auth::check()){{ Auth::user()->id }}@endif">
-
+                                <input type="hidden" name="user_id" value="@if(Auth::check()){{ Auth::user()->id }}@endif">
                             </div>
+                            <div class="mb-3">
+                              <label class="form-label" for="topic">Tema</label>
+                              <input class="form-control" id="topic" type="text" name="topic" placeholder="" value="{{$topic->description}}" readonly data-sb-validations="required" />
+                              <div class="invalid-feedback" data-sb-feedback="topic:required">Tema is required.</div>
+                               <!---- topic input -->
+                              <input type="hidden" name="topic_id" value="{{ $topic->id }}" />
+                            </div>
+
                             {{-- category input  --}}
 
                             <div class="mb-3">
@@ -51,7 +58,7 @@
 
                             <div class="mb-3 ">
                             <input id="content" type="hidden" name="content">
-                                <trix-editor input="content"></trix-editor>
+                                <trix-editor input="content" ></trix-editor>
                             </div>
                             <!-- Form submit button -->
                             <div class="d-grid">
