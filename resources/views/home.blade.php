@@ -25,7 +25,7 @@
                                 <x-topics.topic-item
                                 description="{{$topic->description}}"
                                 link="{{route('topics.index',['id'=>$topic->id])}}"
-                                postCount="3" >
+                                postCount="{{count($topic->posts)}}">
                                 </x-topics.topic-item>
                             @endforeach
                     {{-- </div> --}}

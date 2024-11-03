@@ -31,13 +31,23 @@
                             <!---- user input -->
                                 <input type="hidden" name="user_id" value="@if(Auth::check()){{ Auth::user()->id }}@endif">
                             </div>
-                            <div class="mb-3">
-                              <label class="form-label" for="topic">Tema</label>
-                              <input class="form-control" id="topic" type="text" name="topic" placeholder="" value="{{$topic->description}}" readonly data-sb-validations="required" />
-                              <div class="invalid-feedback" data-sb-feedback="topic:required">Tema is required.</div>
-                               <!---- topic input -->
-                              <input type="hidden" name="topic_id" value="{{ $topic->id }}" />
-                            </div>
+                            @if(isset($topic))
+                                <div class="mb-3">
+                                    <label class="form-label" for="topic">Tema</label>
+                                    <input class="form-control" id="topic" type="text" name="topic" placeholder="" value="{{$topic->description}}" readonly data-sb-validations="required" />
+                                    <div class="invalid-feedback" data-sb-feedback="topic:required">Tema is required.</div>
+                                     <!---- topic input -->
+                                    <input type="hidden" name="topic_id" value="{{ $topic->id }}" />
+                                  </div>
+                            @else
+                                <!-- creacion del topic-->
+                                <div class="mb-3">
+                                    <label class="form-label" for="topic">Crea un nuevo tema</label>
+                                    <input class="form-control" id="topic" type="text" name="new_topic" placeholder="" data-sb-validations="required" />
+                                    <div class="invalid-feedback" data-sb-feedback="topic:required">Tema is required.</div>
+                                  </div>
+
+                            @endif
 
                             {{-- category input  --}}
 
@@ -48,6 +58,7 @@
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback" data-sb-feedback="category:required">Categoria is required.</div>
                             </div>
                             <!-- content input -->
                             {{-- <div class="mb-3 ">

@@ -32,7 +32,6 @@
                     date="{{ $p->created_at->format('F j, Y') }}"
                     user="{{ $p->user ? $p->user->name : 'Usuario desconocido' }}"
                     title="{{ $p->title }}"
-                    {{-- content="{!! $p->content !!}" --}}
                     commentsAmount="{{count($p->comments)}}"
                 />
                 @endforeach

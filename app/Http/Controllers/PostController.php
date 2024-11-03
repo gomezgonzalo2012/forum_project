@@ -63,15 +63,22 @@ class PostController extends Controller
         $request->validate([
             'content' =>"required",
             'title' =>'required',
-            'category' =>'required|array',
-            'topic_id' =>'required'
+            'category' =>'required|array'
         ]);
+        if ($request->filled('new_topic')) {
+
+            $topic = Topic::create(['description' => $request->new_topic]);
+            $topic->save();
+            $topic_id = $topic->id; // se setea el topic id si es que se decide crear el tema
+        } else {
+            $topic_id = $request->topic_id;// proviene de la request desde la seccion temas
+        }
         //  dd($request);
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
         $post->user_id= $request->user_id;
-        $post->topic_id= $request->topic_id;
+        $post->topic_id= $topic_id;
         //$post->post_state = "active";
         // dd($post);
 

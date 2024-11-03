@@ -31,11 +31,11 @@
                     </h5>
                     <div class="text-muted small">{{-- $category --}} Category</div>
                     <!-- Descripción del tema -->
-                    <p class="card-text text-muted small mt-2">{{ Str::limit($description, 100) }} <a href="{{ $link }}">read more</a></p>
+                    <a href="{{ $link }}">ver más</a></p>
                 </div>
                 <div class="text-end">
                     <!-- Contador de respuestas y fecha de actividad -->
-                    <div class="text-muted small">{{ $postCount  }} replies</div>
+                    <div class="text-muted small">{{ $postCount  }} posts</div>
                     <div class="text-muted small">{{--$activityDate--}} Actividad</div>
                 </div>
             </div>
