@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-forum-project">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="{{route('Home.index')}}">@yield('brandName',"The Forum Project")</a>
             <!-- Sidebar Toggle-->

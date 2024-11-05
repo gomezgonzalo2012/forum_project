@@ -24,3 +24,39 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+document.querySelectorAll('.like-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const commentId = this.dataset.commentId;
+
+        fetch(`/comments/${commentId}/like`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector(`#like-count-${commentId}`).textContent = data.likes;
+            document.querySelector(`#dislike-count-${commentId}`).textContent = data.dislikes;
+        });
+    });
+});
+
+document.querySelectorAll('.dislike-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const commentId = this.dataset.commentId;
+
+        fetch(`/comments/${commentId}/dislike`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector(`#like-count-${commentId}`).textContent = data.likes;
+            document.querySelector(`#dislike-count-${commentId}`).textContent = data.dislikes;
+        });
+    });
+});

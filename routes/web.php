@@ -51,6 +51,10 @@ Route::get('/topics/{id}',[TopicController::class,'index'])->name('topics.index'
 Route::middleware('auth')->group(function(){
     Route::post('/comments', [CommentController::class, "store"])->name("comments.store");
     Route::post('/comments/child', [CommentController::class, "storeChild"])->name("comments.storeChild");
+    Route::post('/comments/{commentId}/like', [CommentController::class, "like"])->name("comments.like");
+    Route::post('/comments/{commentId}/dislike', [CommentController::class, "dislike"])->name("comments.dislike");
+
+
 
 });
 

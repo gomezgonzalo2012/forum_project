@@ -25,6 +25,9 @@
                     @endforeach
                 </header>
 
+                <!-- Preview image figure-->
+                {{-- <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure> --}}
+
                 <!-- Post content-->
                 <section class="mb-5 card card-body">
                     <p class="fs-5 mb-4">{!! $singlePost->content !!}</p>
@@ -58,37 +61,25 @@
                                 <p>No comments</p>
                             @else
                                 @foreach ($comments as $comment)
-                                    <div class="card mb-4">
-                                        <div class="card-body">
-                                            <div class="ms-2 flex-grow-1">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="{{ asset('assets/icons8-usuario-masculino-en-círculo-48.png') }}" alt="User avatar" class="rounded-circle me-2" width="40" height="40">
+                                    <div class="mb-4">
+                                        <div class="ms-2 flex-grow-1">
+                                            <div class="mb-4">{{ $comment->content }}</div>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="d-flex justify-content-start">
+                                                    <a type="button" class="" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">
+                                                        <i class="bi bi-reply-fill"></i>
+                                                    </a> reply
+                                                </div>
+                                                <div class="d-flex justify-content-center">
                                                     <div>
-                                                        <h5 class="card-title mb-1">{{ $comment->user->name }}</h5>
-                                                        <h6 class="card-subtitle text-muted">{{ $comment->created_at->diffForHumans() }}</h6>
+                                                        <img src="{{ asset('assets/icons8-usuario-masculino-en-círculo-48.png') }}" width="25px" height="25px" style="border-radius:50%" alt="profile image">
+                                                    </div>
+                                                    <div class="ms-1 d-flex align-items-center">
+                                                        <small>by {{ $comment->user->name }}</small>
                                                     </div>
                                                 </div>
-                                                @if($comment->user->isModerator())
-                                                    <small><span class="badge bg-secondary">Moderador</span></small>
-                                                @endif
                                             </div>
-
-                                            <p class="card-text mt-2">{{ $comment->content }}</p>
                                             <hr>
-                                            <div class="d-flex justify-content-start align-items-center mt-3">
-                                                <button class="ms-2 btn like-button" data-comment-id="{{ $comment->id }}">
-                                                    <i class="bi bi-hand-thumbs-up"></i>
-                                                    <span id="like-count-{{ $comment->id }}">{{ $comment->likes }}</span>
-                                                </button>
-                                                <button class="ms-2 btn dislike-button" data-comment-id="{{ $comment->id }}">
-                                                    <i class="bi bi-hand-thumbs-down"></i>
-                                                    <span id="dislike-count-{{ $comment->id }}">{{ $comment->dislikes }}</span>
-                                                </button>
-                                                <div>
-                                                    <button type="button" class="btn fw-bold btn-sm" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">Responder</button>
-                                                    <i class="bi bi-reply-all"></i>
-                                                </div>
-                                            </div>
 
                                             <div class="collapse py-2" id="collapseComment{{ $comment->id }}">
                                                 <form method="POST" action="{{ route('comments.storeChild') }}">

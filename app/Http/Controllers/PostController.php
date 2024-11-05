@@ -13,7 +13,7 @@ class PostController extends Controller
     public function index(){
         $post = Post::orderBy("created_at","desc")
         ->with(["comments","user"])->paginate(10);
-        // dd($post);
+         dd($post);
 
        // $categories = Category::take(4)->get();
 

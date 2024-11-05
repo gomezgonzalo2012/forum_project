@@ -8183,6 +8183,11 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
 }
 
+
+.bg-forum-project {
+    --bs-bg-opacity: 1;
+    background-color: #054446;
+  }
 .bg-black {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-black-rgb), var(--bs-bg-opacity)) !important;
