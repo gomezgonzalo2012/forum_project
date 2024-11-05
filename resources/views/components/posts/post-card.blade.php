@@ -1,4 +1,5 @@
 
+
 <!-- resources/views/components/blog-card.blade.php -->
 <div class="card mb-4">
     {{-- <a href="{{ $link }}"><img class="card-img-top" src="{{ $image }}" alt="..."></a> --}}
@@ -21,9 +22,6 @@
         <h4 class="card-title">{{ $title }}</h4> {{--evita el html --}}
         <div class="d-flex justify-content-end">
         <i class="bi bi-chat-square"> {{$commentsAmount}}</i>
-
         </div>
-        {{-- <p class="card-body">{!! $content !!}</p> --}}
-        {{-- <a class="btn btn-secondary btn-sm" href="{{ $link }}">See {{$comments}} comments→</a> --}}
     </div>
 </div>

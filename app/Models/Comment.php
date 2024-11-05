@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
-    protected $fillable = ["content", "votes", "comment_state", "user_id","post_id","father_comment_id"];
+    protected $fillable = ["content", "likes", "dislikes","comment_state", "user_id","post_id","father_comment_id"];
     protected $table ="comments";
 
 // relaciones inversas

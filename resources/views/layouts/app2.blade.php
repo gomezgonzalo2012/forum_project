@@ -20,9 +20,9 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-forum-project">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="{{route('posts.index')}}">@yield('brandName',"The Forum Project")</a>
+            <a class="navbar-brand ps-3" href="{{route('Home.index')}}">@yield('brandName',"The Forum Project")</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -66,7 +66,7 @@
             @include("layouts.sidebar")
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container fluid px-4">
+                    <div class="container-fluid px-4">
                         @yield('content')
                     </div>
 

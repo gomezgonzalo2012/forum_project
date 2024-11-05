@@ -42,4 +42,22 @@ class CommentController extends Controller
         $comment->save();
         return redirect()->back();
     }
+
+    // likes y dislikes
+
+    // En el controlador CommentController
+    public function like($commentId)
+    {
+        $comment = Comment::findOrFail($commentId);
+        $comment->increment('likes'); // Incrementa el contador de likes en 1
+        return response()->json(['likes' => $comment->likes, 'dislikes' => $comment->dislikes]);
+    }
+
+    public function dislike($commentId)
+    {
+        $comment = Comment::findOrFail($commentId);
+        $comment->increment('dislikes'); // Incrementa el contador de dislikes en 1
+        return response()->json(['likes' => $comment->likes, 'dislikes' => $comment->dislikes]);
+    }
+
 }

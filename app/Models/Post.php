@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ["title","content", "post_state","user_id"];
+    protected $fillable = ["title","content", "post_state","user_id","topic_id"];
 
     protected $table = "posts";
 
@@ -21,5 +21,8 @@ class Post extends Model
     }
     public function user(){
         return $this->belongsTo(User::class);
+    }
+    public function topic(){
+        return $this->belongsTo(Topic::class);
     }
 }
