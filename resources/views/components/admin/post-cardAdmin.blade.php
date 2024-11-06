@@ -6,9 +6,17 @@
     'commentsAmount',
     'title',
     'image',
+    'isModerate',
+    'total_dislikes'
 ])
-<!-- resources/views/components/blog-card.blade.php -->
-<div class="card mb-4">
+
+{{$total_dislikes}}
+<div class="card mb-4
+    @if($total_dislikes > 50)
+        alert alert-danger
+    @elseif($total_dislikes > 25)
+        alert alert-warning
+    @endif">
 
     {{-- <a href="{{ $link }}"><img class="card-img-top" src="{{ $image }}" alt="..."></a> --}}
     <div class="card-header">
@@ -29,7 +37,7 @@
         <div class="small text-muted">{{ $date }}  {{--{{$name}}--}}</div>
         <h4 class="card-title">{{ $title }}</h4> {{--evita el html --}}
         <div class="d-flex justify-content-end">
-            <p>Total Dislikes: {{  1 ?? 'N/A' }}</p>
+            <p>Total Dislikes: {{  $total_dislikes ?? 'N/A' }}</p>
             <i class="bi bi-chat-square"> {{$commentsAmount}}</i>
         </div>
     </div>

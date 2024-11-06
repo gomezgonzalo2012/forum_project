@@ -54,8 +54,8 @@
                         @endauth
 
                         @if (isset($comments))
-                            @if (empty($comments))
-                                <p>No comments</p>
+                            @if ($comments->isEmpty())
+                                <p>No hay comentarios</p>
                             @else
                                 @foreach ($comments as $comment)
                                     <div class="card mb-4">
@@ -67,10 +67,10 @@
                                                         <h5 class="card-title mb-1">{{ $comment->user->name }}</h5>
                                                         <h6 class="card-subtitle text-muted">{{ $comment->created_at->diffForHumans() }}</h6>
                                                     </div>
-                                                </div>
-                                                @if($comment->user->isModerator())
+                                                    @if($comment->user->isModerator())
                                                     <small><span class="badge bg-secondary">Moderador</span></small>
                                                 @endif
+                                                </div>
                                             </div>
 
                                             <p class="card-text mt-2">{{ $comment->content }}</p>
@@ -105,7 +105,7 @@
                                             </div>
                                         </div>
                                         @if ($comment->children->isNotEmpty())
-                                            <div class="replies ml-4">
+                                            <div class="replies  px-2 ">
                                                 @include('components.comments.comment-box2', ['childcomments' => $comment->children])
                                             </div>
                                         @endif

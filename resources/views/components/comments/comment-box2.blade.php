@@ -1,6 +1,6 @@
 @foreach($childcomments as $child)
-    <div class="card mb-3">
-        <div class="card-body">
+    <div class=" mb-3 ms-3">
+        <div class="">
             <div class="d-flex align-items-start">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('assets/icons8-usuario-masculino-en-círculo-48.png') }}" alt="User avatar" class="rounded-circle me-2" width="40" height="40">
@@ -13,8 +13,13 @@
                     <small><span class="badge bg-secondary">Moderador</span></small>
                 @endif
             </div>
+            {{-- manejo de contenido suspendido --}}
+            @if ($child->comment_state == "desactivo")
+            <p class="card-text mt-2 alert alert-info "style="width: 28rem;">Este comentario fue suspendido por un moderador. </p>
+            @else
+            <p class="card-text mt-2 ms-5">{{ $child->content }}</p>
+            @endif
 
-            <p class="card-text mt-2">{{ $child->content }}</p>
 
             {{-- Likes and Dislikes --}}
             <div class="d-flex justify-content-start align-items-center mt-3">

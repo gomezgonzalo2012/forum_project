@@ -32,6 +32,9 @@
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
+            @if(!Auth::check())
+                <a href="{{ route('login') }}" class="btn btn-primary">Inicia sesión</a>
+            @endif
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 @if(Auth::check())

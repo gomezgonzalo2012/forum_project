@@ -59,7 +59,10 @@ Route::middleware('auth')->group(function(){
 });
 
 Route::middleware('auth','role:admin')->group(function(){ //'role:admin'
-    Route::get('/admin/posts',[AdminController::class,'show'])->name('admin.show');
+    Route::post('/admin/updateStatus', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
+    Route::get('/admin/posts',[AdminController::class,'index'])->name('admin.index');
+    Route::get('/admin/{post}',[AdminController::class,'show'])->name('admin.show');
+
 });
 
 
