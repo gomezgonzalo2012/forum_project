@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class AdminController extends Controller
 {
@@ -49,8 +51,6 @@ class AdminController extends Controller
        // return view("posts.show");
    }
 
-
-
     public function updateStatus(Request $request)
     {
 
@@ -69,20 +69,23 @@ class AdminController extends Controller
         return redirect()->back()->with('status', 'Comentarios actualizados exitosamente.');
     }
 
+    public function createCategory(){
+        return view("categories.create");
+    }
+    public function storeCategory(Request $request){
+        // dd($request);
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        $categoryName = $request->input("name");
+        $exists= Category::where('name', $categoryName)->exists();
+        if($exists != null){
+            // dd("ya existe");
+            return redirect()->back()->with('error', 'Categoria ya existe.');
+        }
+        Category::create(['name' => $categoryName]);
+        // dd("creada");
 
-   public function enablePost(){
-
-   }
-   public function disableComment(){
-
-   }
-
-   public function enableComment(){
-
-   }
-
-   public function createCategory(){
-
-   }
-
+        return redirect()->back()->with('status', 'Categoria creada exitosamente.');
+    }
 }

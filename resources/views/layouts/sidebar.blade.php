@@ -19,9 +19,9 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{route('admin.index')}}">Moderar Discusiones</a>
-                            <a class="nav-link" href="{{route('admin.addCategory')}}">Agregar Categorias</a>
+                            <a class="nav-link" href="{{route('admin.createCategory')}}">Agregar Categorias</a>
                             @if(Auth::user()->user_rol=="superAdmin") <!--solo para super usuario-->
-                            <a class="nav-link" href="{{route('admin.addCategory')}}">Agregar Moderadores</a>
+                            <a class="nav-link" href="{{route('admin.createCategory')}}">Agregar Moderadores</a>
                             @endif
                         </nav>
                     </div>
