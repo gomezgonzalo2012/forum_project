@@ -1,6 +1,6 @@
 @foreach($childcomments as $child)
     <div class=" mb-3 ms-3">
-        <div class="">
+
             <div class="d-flex align-items-start">
                 <div class="d-flex align-items-center">
                     <img src="{{ asset('assets/icons8-usuario-masculino-en-círculo-48.png') }}" alt="User avatar" class="rounded-circle me-2" width="40" height="40">
@@ -19,24 +19,30 @@
             @else
             <p class="card-text mt-2 ms-5">{{ $child->content }}</p>
             @endif
+        @php
+            $userReaction = $child->userReaction(Auth::id());
 
+        @endphp
 
-            {{-- Likes and Dislikes --}}
-            <div class="d-flex justify-content-start align-items-center mt-3">
-                <button class="ms-2 btn like-button" data-comment-id="{{ $child->id }}">
-                    <i class="bi bi-hand-thumbs-up"></i>
-                    <span id="like-count-{{ $child->id }}">{{ $child->likes }}</span>
-                </button>
-                <button class="ms-2 btn dislike-button" data-comment-id="{{ $child->id }}">
-                    <i class="bi bi-hand-thumbs-down"></i>
-                    <span id="dislike-count-{{ $child->id }}">{{ $child->dislikes }}</span>
-                </button>
-                <div>
-                    <button type="button" class="btn fw-bold btn-sm" data-bs-toggle="collapse" href="#collapseComment{{ $child->id }}" aria-expanded="false" aria-controls="collapseComment{{ $child->id }}">Responder</button>
-                    <i class="bi bi-reply-all"></i>
-                </div>
-            </div>
+    <div class="d-flex justify-content-start align-items-center mt-3">
+        <button class="ms-2 btn like-button" data-comment-id="{{ $child->id }}" data-reaction="likes"
+            @if($userReaction && $userReaction->reaction === 'likes') disabled @endif>
+            <i class="bi bi-hand-thumbs-up"></i>
+            <span id="like-count-{{ $child->id }}">{{ $child->likes }}</span>
+        </button>
+
+        <button class="ms-2 btn dislike-button" data-comment-id="{{ $child->id }}" data-reaction="dislikes"
+            @if($userReaction && $userReaction->reaction === 'dislikes') disabled @endif>
+            <i class="bi bi-hand-thumbs-down"></i>
+            <span id="dislike-count-{{ $child->id }}">{{ $child->dislikes }}</span>
+        </button>
+        <div>
+            @if($child->comment_level<4)
+            <button type="button" class="btn fw-bold btn-sm" data-bs-toggle="collapse" href="#collapseComment{{ $child->id }}" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">Responder</button>
+            <i class="bi bi-reply-all"></i>
+            @endif
         </div>
+    </div>
 
         {{-- Collapsible Form for Replying to a Comment --}}
         <div class="collapse py-2" id="collapseComment{{ $child->id }}">
@@ -52,7 +58,6 @@
                 </div>
             </form>
         </div>
-
         {{-- Displaying Child Comments Recursively --}}
         @if($child->children->isNotEmpty())
             <div class="mt-3 ms-1">

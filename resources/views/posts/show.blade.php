@@ -69,7 +69,7 @@
                                                     </div>
                                                     @if($comment->user->isModerator())
                                                     <small><span class="badge bg-secondary">Moderador</span></small>
-                                                @endif
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -88,6 +88,7 @@
                                                     <button type="button" class="btn fw-bold btn-sm" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">Responder</button>
                                                     <i class="bi bi-reply-all"></i>
                                                 </div>
+
                                             </div>
 
                                             <div class="collapse py-2" id="collapseComment{{ $comment->id }}">

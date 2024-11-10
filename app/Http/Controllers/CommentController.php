@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\CommentUserReaction;
 use App\Models\User;
 use App\Notifications\NewCommentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request as FacadesRequest;
+use PharIo\Manifest\AuthorCollection;
 
 class CommentController extends Controller
 {
@@ -23,7 +26,7 @@ class CommentController extends Controller
         $comment->content = $request->content;
         $comment->user_id = $request->user_id;
         $comment->post_id = $request->post_id;
-
+        $comment->comment_level =1;
         $comment->save();
         return redirect()->back();
     }
@@ -43,25 +46,65 @@ class CommentController extends Controller
         $comment->user_id = $request->user_id;
         $comment->post_id = $request->post_id;
         $comment->father_comment_id= $request->father_comment_id;
+        // valido nivel de comentario padre
+        $fatherComment  = Comment::where('id',$request->father_comment_id)->first();
+
+        switch($fatherComment->comment_level){
+            case 1: $comment->comment_level = 2;
+            break;
+            case 2: $comment->comment_level = 3;
+            break;
+            case 3: $comment->comment_level = 4;
+            break;
+            default:
+            return redirect()->back();
+        }
+        // dd($comment);
         $comment->save();
         $this->createNotification($comment); // crear notificaciion
         return redirect()->back(); // agregar mensaje
     }
 
     // likes y dislikes
-    public function like($commentId)
-    {
-        $comment = Comment::findOrFail($commentId);
-        $comment->increment('likes'); // Incrementa el contador de likes en 1
-        return response()->json(['likes' => $comment->likes, 'dislikes' => $comment->dislikes]);
+
+    public function reactToComment(Request $request, $comment_id){
+        $actualUser = Auth::user()->id;
+        $reaction = $request->reaction;
+
+        $sameUser = Comment::where('id', $comment_id)->where('user_id', $actualUser)->exists();
+        // dd($sameUser);
+        if ($sameUser) {
+            return response()->json(['error' => 'No puedes reaccionar a tu comentario'], 403);
+        }
+
+        $alredyReacted = CommentUserReaction::where('user_id',$actualUser)->where('comment_id',$comment_id)->first();
+        if ($alredyReacted) {
+            return response()->json(['error' => 'Ya reaccionaste a este comentario'], 403);
+        }
+
+
+        CommentUserReaction::create([
+            'user_id'=>$actualUser,
+            'comment_id'=>$comment_id,
+            'reaction'=>$reaction // puede ser likes o dislikes
+        ]);
+
+        // Actualizar contador en el comentario
+        $comment = Comment::find($comment_id);
+        if ($reaction === 'likes') {
+            $comment->increment('likes');
+        } else {
+            $comment->increment('dislikes');
+        }
+        // Devolver ambos contadores
+        return response()->json([
+            'likes' => $comment->likes,
+            'dislikes' => $comment->dislikes
+        ]);
+
     }
 
-    public function dislike($commentId)
-    {
-        $comment = Comment::findOrFail($commentId);
-        $comment->increment('dislikes'); // Incrementa el contador de dislikes en 1
-        return response()->json(['likes' => $comment->likes, 'dislikes' => $comment->dislikes]);
-    }
+
 
     // crear notificaciones
     public function createNotification(Comment $comment){

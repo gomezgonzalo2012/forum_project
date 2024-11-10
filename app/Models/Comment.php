@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
-    protected $fillable = ["content", "likes", "dislikes","comment_state", "user_id","post_id","father_comment_id"];
+    protected $fillable = ["content", "likes", "dislikes","comment_state", "user_id","post_id","father_comment_id","comment_level"];
     protected $table ="comments";
 
 // relaciones inversas
@@ -27,4 +27,10 @@ class Comment extends Model
         return $this->belongsTo(Comment::class, 'father_comment_id');
     }
 
+    public function reactions(){
+        return $this->hasMany(CommentUserReaction::class);
+    }
+    public function userReaction($userId){
+        return $this->reactions()->where('user_id',$userId)->first();
+    }
 }
