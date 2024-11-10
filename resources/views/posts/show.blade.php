@@ -3,7 +3,7 @@
 @section("content")
 <!-- Page content-->
 <div class="container mt-5">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-lg-8">
             <!-- Post content-->
             <article>
@@ -118,12 +118,6 @@
                     </div>
                 </div>
             </section>
-        </div>
-
-        <!-- Side widgets-->
-        <div class="col-lg-4">
-            <!-- Categories widget-->
-            <x-categories.categories-card :categories="$categories" />
         </div>
     </div>
 </div>

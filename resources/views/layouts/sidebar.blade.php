@@ -3,17 +3,31 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Home</div>
-                <a class="nav-link" href="index.html">
-                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Dashboard
+                <a class="nav-link" href="{{route('Home.index')}}">
+                    <div class="sb-nav-link-icon"><i class="bi bi-house"></i></div>
+                    Principal
                 </a>
                 <div class="sb-sidenav-menu-heading">Discusiones</div>
-                <a class="nav-link" href="{{route('posts.create')}}">Crear Discusion</a>
+                <a class="nav-link" href="{{route('posts.create')}}">
+                    <div class="sb-nav-link-icon"><i class="bi bi-plus-square"></i></div>Crear Discusion
+                </a>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
+                    <div class="sb-nav-link-icon"><i class="bi bi-card-checklist"></i></div>
+                    Categorias
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        @foreach ($categories as $category )
+                        <a class="nav-link" href="#">{{$category->name}}</a>
+                        @endforeach
+                    </nav>
+                </div>
                 @if(Auth::check())
                     @if(Auth::user()->user_rol=="admin")
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Moderator Options
+                        <div class="sb-nav-link-icon"><i class="bi bi-people"></i></i></div>
+                        Moderadores
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">

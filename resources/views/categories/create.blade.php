@@ -2,6 +2,15 @@
 
 @section("content")
 <div class="container mt-4">
+    <form class="row g-3" method="POST" action="{{route('admin.storeCategory')}}">
+        @csrf
+        <div class="col-auto">
+          <input type="text" class="form-control" id="inputPassword2" name="name" placeholder="Categoria nueva">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-3"> Crear</button>
+        </div>
+      </form>
     <div class="row">
         @foreach ($categories as $cat)
             <div class="col-lg-4 col-md-6 mb-4">
@@ -25,14 +34,6 @@
         <div class="alert alert-danger col-lg-4" role="alert">{{ session('error') }}</div>
     @endif
 
-    <form class="row g-3" method="POST" action="{{route('admin.storeCategory')}}">
-        @csrf
-        <div class="col-auto">
-          <input type="text" class="form-control" id="inputPassword2" name="name" placeholder="Categoria nueva">
-        </div>
-        <div class="col-auto">
-          <button type="submit" class="btn btn-primary mb-3"> Crear</button>
-        </div>
-      </form>
+
 </div>
 @endsection

@@ -30,6 +30,10 @@
                             @endforeach
                     {{-- </div> --}}
                 </div>
+
+            <nav aria-label="Pagination">
+                {{$topics->links()}}
+            </nav>
             </div>
 
             <!-- Side widgets-->
@@ -37,10 +41,10 @@
 
                 <!-- Categories widget-->
 
-                <x-categories.categories-card
+                {{-- <x-categories.categories-card
 
                     :categories="$categories"
-                 />
+                 /> --}}
 
                 <!-- Side widget-->
                 <div class="card mb-4">
@@ -50,9 +54,8 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <!-- Icono de tema y título -->
                                             {{-- <h5 class="card-title mb-1"> --}}
-                                                <i class="bi bi-eye"></i>
+                                                <i class="bi bi-fire"></i>
                                                 <p><a href="{{route('posts.show',['post'=>$pop->id])}}" class="text-dark text-decoration-none">{{$pop->title}}</a></p>
                                             {{-- </h5> --}}
                                         </div>
@@ -68,7 +71,9 @@
 
                 </div>
             </div>
+
         </div>
     </div>
+
 @endsection
 
