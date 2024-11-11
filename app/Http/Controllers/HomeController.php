@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index(){
-        $topics = Topic::with('posts')->paginate(10);
+        $topics = Topic::with('posts')->paginate(5);
 
         return view("home", compact('topics'));
     }

@@ -26,14 +26,29 @@
             <!-- Blog entries-->
             <div class="col-lg-8">
                 @foreach ($posts as $p)
-                <x-posts.post-card
+                {{-- @dd(count($p->comments->likes)) --}}
+
+                {{-- <x-posts.post-card
                     link="{{route('posts.show',['post'=>$p->id])}}"
                     image="https://dummyimage.com/850x350/dee2e6/6c757d.jpg"
                     date="{{ $p->created_at->format('F j, Y') }}"
                     user="{{ $p->user ? $p->user->name : 'Usuario desconocido' }}"
                     title="{{ $p->title }}"
                     commentsAmount="{{count($p->comments)}}"
-                />
+                    likes="{{count($p->comments->likes)}}"
+                    dislikes="{{count($p->comments->dislikes)}}"
+                /> --}}
+                @component('components.posts.post-card', [
+                    'link'=>route('posts.show',['post'=>$p->id]),
+                    'image'=>"https://dummyimage.com/850x350/dee2e6/6c757d.jpg",
+                    'date'=> $p->created_at->format('F j, Y') ,
+                    'user'=>$p->user ? $p->user->name : 'Usuario desconocido' ,
+                    'title'=> $p->title ,
+                    'commentsAmount'=>count($p->comments),
+                    'likes'=>$p->comments->sum('likes'),
+                    'dislikes'=>$p->comments->sum('dislikes'),
+                    ])
+                @endcomponent
                 @endforeach
 
 

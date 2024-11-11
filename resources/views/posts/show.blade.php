@@ -3,7 +3,7 @@
 @section("content")
 <!-- Page content-->
 <div class="container mt-5">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-lg-8">
             <!-- Post content-->
             <article>
@@ -54,8 +54,8 @@
                         @endauth
 
                         @if (isset($comments))
-                            @if (empty($comments))
-                                <p>No comments</p>
+                            @if ($comments->isEmpty())
+                                <p>No hay comentarios</p>
                             @else
                                 @foreach ($comments as $comment)
                                     <div class="card mb-4">
@@ -67,10 +67,10 @@
                                                         <h5 class="card-title mb-1">{{ $comment->user->name }}</h5>
                                                         <h6 class="card-subtitle text-muted">{{ $comment->created_at->diffForHumans() }}</h6>
                                                     </div>
-                                                </div>
-                                                @if($comment->user->isModerator())
+                                                    @if($comment->user->isModerator())
                                                     <small><span class="badge bg-secondary">Moderador</span></small>
-                                                @endif
+                                                    @endif
+                                                </div>
                                             </div>
 
                                             <p class="card-text mt-2">{{ $comment->content }}</p>
@@ -88,6 +88,7 @@
                                                     <button type="button" class="btn fw-bold btn-sm" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">Responder</button>
                                                     <i class="bi bi-reply-all"></i>
                                                 </div>
+
                                             </div>
 
                                             <div class="collapse py-2" id="collapseComment{{ $comment->id }}">
@@ -105,7 +106,7 @@
                                             </div>
                                         </div>
                                         @if ($comment->children->isNotEmpty())
-                                            <div class="replies ml-4">
+                                            <div class="replies  px-2 ">
                                                 @include('components.comments.comment-box2', ['childcomments' => $comment->children])
                                             </div>
                                         @endif
@@ -118,12 +119,6 @@
                     </div>
                 </div>
             </section>
-        </div>
-
-        <!-- Side widgets-->
-        <div class="col-lg-4">
-            <!-- Categories widget-->
-            <x-categories.categories-card :categories="$categories" />
         </div>
     </div>
 </div>

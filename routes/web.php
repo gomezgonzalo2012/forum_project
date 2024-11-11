@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/user/notifications',[ProfileController::class, 'notifications'])->name('profile.notifications');
 
 });
 
@@ -53,13 +54,17 @@ Route::middleware('auth')->group(function(){
     Route::post('/comments/child', [CommentController::class, "storeChild"])->name("comments.storeChild");
     Route::post('/comments/{commentId}/like', [CommentController::class, "like"])->name("comments.like");
     Route::post('/comments/{commentId}/dislike', [CommentController::class, "dislike"])->name("comments.dislike");
-
-
+    Route::post('/comments/{commentId}/reactToComment', [CommentController::class, "reactToComment"])->name("comments.reactToComment");
 
 });
 
 Route::middleware('auth','role:admin')->group(function(){ //'role:admin'
-    Route::get('/admin/posts',[AdminController::class,'show'])->name('admin.show');
+    Route::post('/admin/updateStatus', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
+    Route::get('/admin/createCategory',[AdminController::class,'createCategory'])->name('admin.createCategory');
+    Route::post('/admin/storeCategory',[AdminController::class,'storeCategory'])->name('admin.storeCategory');
+    Route::get('/admin/posts',[AdminController::class,'index'])->name('admin.index');
+    Route::get('/admin/{post}',[AdminController::class,'show'])->name('admin.show');
+
 });
 
 
