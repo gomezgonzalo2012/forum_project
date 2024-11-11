@@ -11274,8 +11274,17 @@ img {
 }
 
 .border-bottom-only {
-  border: none;
-  border: bottom top 0; 
-  border: bottom end 1;
-  /*border-bottom: 1px solid #000; /* Puedes ajustar el color y grosor según tus necesidades */
+  border: none; /* Elimina todos los bordes */
+  border-bottom: 2px solid black; /* Borde inferior negro y más ancho */
+  outline: none; /* Remueve el contorno al enfocar */
+  background-color: transparent; /* Fondo transparente */
+  box-sizing: border-box; /* Ajuste de caja para que el padding no afecte el ancho */
+
+}
+
+
+.bg-gradient-primary {
+    background-color: #054446;
+    
+    background-size: cover;
 }

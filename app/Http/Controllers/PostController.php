@@ -65,27 +65,26 @@ class PostController extends Controller
             'title' =>'required',
             'category' =>'required|array'
         ]);
-        if ($request->filled('new_topic')) {
-
-            $topic = Topic::create(['description' => $request->new_topic]);
-            $topic->save();
-            $topic_id = $topic->id; // se setea el topic id si es que se decide crear el tema
-        } else {
-            $topic_id = $request->topic_id;// proviene de la request desde la seccion temas
+        try {
+            if ($request->filled('new_topic')) { 
+                $topic = Topic::create(['description' => $request->new_topic]); 
+                $topic->save(); 
+                $topic_id = $topic->id; // se setea el topic id si es que se decide crear el tema 
+           } else {
+                $topic_id = $request->topic_id; // proviene de la request desde la seccion temas 
+           } 
+            $post = new Post();
+            $post->title = $request->title; 
+            $post->content = $request->content; 
+            $post->user_id = $request->user_id;
+            $post->topic_id = $topic_id; 
+            $post->save(); 
+            $post->categories()->sync($request->category); // asocia la categoria al post 
+           
+            session()->flash("success", "Discucion creada"); 
+            return redirect()->route('Home.index')->with('success', 'Discucion creada con éxito.');
+            } catch (\Exception $e) {
+             return redirect()->back()->with('error', 'Error al crear la discucion: ' . $e->getMessage());
+            }
         }
-        //  dd($request);
-        $post = new Post();
-        $post->title = $request->title;
-        $post->content = $request->content;
-        $post->user_id= $request->user_id;
-        $post->topic_id= $topic_id;
-        //$post->post_state = "active";
-        // dd($post);
-
-        $post->save();
-        $post->categories()->sync($request->category); // asocia la categoria al post
-        session()->flash("success"," Discucion creada");
-
-        return redirect()->route('Home.index')->with('success','Discucion creada con éxito.');
-    }
 }

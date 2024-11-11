@@ -16,14 +16,9 @@ class CommentController extends Controller
             'user_id'=>'required',
             'post_id'=>'required'
         ]);
-        $comment = new Comment();
-        $comment->content = $request->content;
-        $comment->user_id = $request->user_id;
-        $comment->post_id = $request->post_id;
-
-        $comment->save();
-        return redirect()->back();
+        try { $comment = new Comment(); $comment->content = $request->content; $comment->user_id = $request->user_id; $comment->post_id = $request->post_id; $comment->save(); return redirect()->back()->with('success', 'Comment successfully added!'); } catch (\Exception $e) { return redirect()->back()->with('error', 'Failed to add comment: ' . $e->getMessage()); } 
     }
+    
     public function storeChild(Request $request ){
         //dd($request->post_id);
         //dd($request->user_id);
@@ -34,13 +29,13 @@ class CommentController extends Controller
             'father_comment_id'=>'required',
 
         ]);
-        $comment = new Comment();
-        $comment->content = $request->content;
-        $comment->user_id = $request->user_id;
-        $comment->post_id = $request->post_id;
-        $comment->father_comment_id= $request->father_comment_id;
-        $comment->save();
-        return redirect()->back();
+        try { $comment = new Comment(); $comment->content = $request->content; $comment->user_id = $request->user_id; $comment->post_id = $request->post_id; $comment->father_comment_id = $request->father_comment_id; $comment->save(); 
+            return redirect()->back()->with('success', 'Reply successfully added!'); 
+        } catch (\Exception $e) 
+        { 
+            return redirect()->back()->with('error', 'Failed to add reply: ' . $e->getMessage()); 
+        }
+
     }
 
     // likes y dislikes
