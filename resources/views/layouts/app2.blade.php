@@ -12,6 +12,9 @@
         <link rel="stylesheet" href="{{asset('assets/styles.css')}}">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+        {{-- favicon  --}}
+        <link rel="shortcut icon" type="image/png" href="{{ asset('assets/messages_5825874.png') }}">
+        <link rel="shortcut icon" sizes="192x192" href="{{ asset('assets/messages_5825874.png') }}">
         @yield("styles")
         {{-- para seleccion multiple --}}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
