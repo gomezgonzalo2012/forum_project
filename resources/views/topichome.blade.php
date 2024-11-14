@@ -12,6 +12,7 @@
 
     <div class="container">
         <div class="row">
+
             {{-- <div class="text-center my-5">
                 <h3 class="fw-bolder">{{$topic->description}}</h3>
             </div> --}}
@@ -19,7 +20,7 @@
             @auth
                 <a href="{{route('posts.createWithTopic',['topic_id'=>$topic->id])}}" class="btn btn-primary" >Crear discusión</a>
                 @else
-                <a href="{{route('login')}}" class="btn btn-primary"> Inicia sesión y crear una discusión</a>
+                <a href="{{route('login')}}" class="btn btn-primary"> Inicia sesión para crear una discusión.</a>
             @endauth
         </div>
 
