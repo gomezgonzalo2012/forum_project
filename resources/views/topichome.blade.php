@@ -1,10 +1,19 @@
 @extends('layouts.app2')
 
+@php
+    $searchRoute = route('posts.search');
+@endphp
+
+
 @section("content")
 <header class="py-2 bg-light border-bottom mb-4">
     <div class="container">
         <div class="text-start my-2">
-            <h2 class="fw-bolder">Tema: {{$topic->description}}</h4>
+            @if (isset($topic))
+                <h2 class="fw-bolder">{{$topic->description}}</h2>
+            @else
+                <h2 class="fw-bolder">Resultados de Busqueda</h2>
+            @endif
         </div>
     </div>
 </header>

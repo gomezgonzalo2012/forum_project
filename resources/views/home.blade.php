@@ -1,5 +1,10 @@
 @extends('layouts.app2')
 
+@extends('layouts.app2')
+@php
+    $searchRoute = route('topics.search');
+@endphp
+
 @section("content")
 <header class="py-5 bg-light border-bottom mb-4">
     <div class="container">
@@ -26,8 +31,10 @@
                                 description="{{$topic->description}}"
                                 link="{{route('topics.index',['id'=>$topic->id])}}"
                                 postCount="{{count($topic->posts)}}"
-                                lastDate="{{$topic->posts->first()->created_at->locale('es_ES')->diffForHumans()}}">
+                                lastDate="{{ $topic->posts->first() ? $topic->posts->first()->created_at->locale('es_ES')->diffForHumans() : 'Sin actividad' }}">
+                                
                                 </x-topics.topic-item>
+
                             @endforeach
                     {{-- </div> --}}
                 </div>
@@ -63,7 +70,7 @@
                                         <div class="text-end">
                                             <!-- Contador de respuestas y fecha de actividad -->
                                             <div class="text-muted small"><i class="bi bi-reply-all"></i> {{count($pop->comments)}}</div>
-                                            <div class="text-muted small"> Ultima actividad {{$pop->comments->first()->created_at->locale('es_ES')->diffForHumans()}}</div>
+                                            <div class="text-muted small"> Ultima actividad {{$pop->comments->first() ? $pop->comments->first()->created_at->locale('es_ES')->diffForHumans() : 'Sin actividad'}}</div>
                                         </div>
                                     </div>
                                 </div>

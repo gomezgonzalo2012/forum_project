@@ -48,6 +48,9 @@ Route::get('/posts/{post}',[PostController::class,'show'])->name('posts.show');
 // topics
 Route::get('/topics/{id}',[TopicController::class,'index'])->name('topics.index');
 
+// Rutas para búsqueda
+Route::get('/search/topics', [TopicController::class, 'search'])->name('topics.search');
+Route::get('/search/posts', [PostController::class, 'search'])->name('posts.search');
 
 Route::middleware('auth')->group(function(){
     Route::post('/comments', [CommentController::class, "store"])->name("comments.store");

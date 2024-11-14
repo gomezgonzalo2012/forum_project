@@ -61,8 +61,9 @@ class PostController extends Controller
     // }
     public function store(Request $request){
         $request->validate([
-            'content' =>"required",
-            'title' =>'required',
+            'content' =>"required ",
+            'new_topic' => 'required_without:topic_id',
+            'title' =>'required|255',
             'category' =>'required|array'
         ]);
         try {
@@ -86,5 +87,24 @@ class PostController extends Controller
             } catch (\Exception $e) {
              return redirect()->back()->with('error', 'Error al crear la discucion: ' . $e->getMessage());
             }
+        }
+
+        public function search(Request $request){
+            $query = $request->input('search'); 
+            $query = $request->input('search'); 
+            $posts = Post::where('title', 'LIKE', '%' . $query . '%')->paginate(5);
+
+             // Obtén el primer tema relacionado o especifica el tema que necesites
+            $topic = Topic::where('description', 'LIKE', '%' . $query . '%')->first();
+
+            // Si no se encontró un tema, puedes asignar un valor por defecto
+            if (!$topic) {
+                $topic = (object) [
+                    'id' => null,  // O puedes asignar un ID ficticio, como -1, si prefieres
+                    'description' => 'Resultados de Búsqueda'
+                ];
+            }
+
+            return view('topichome', compact('posts', 'topic'));
         }
 }
