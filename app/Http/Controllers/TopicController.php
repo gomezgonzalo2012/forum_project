@@ -26,7 +26,7 @@ public function search(Request $request)
     $topics = Topic::with('posts')
     ->where('description', 'LIKE', '%' . $query . '%')
     ->paginate(5);
-
+  
     // $topics = Topic::with('posts')->paginate(5);
 
     return view('home', compact('topics'));

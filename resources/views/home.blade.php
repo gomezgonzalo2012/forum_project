@@ -1,9 +1,5 @@
 @extends('layouts.app2')
 
-@extends('layouts.app2')
-@php
-    $searchRoute = route('topics.search');
-@endphp
 
 @section("content")
 <header class="py-5 bg-light border-bottom mb-4">
@@ -18,11 +14,20 @@
         </div>
     </div>
 </header>
+
+
     <!-- Page content-->
 
     <div class="container">
         <div class="row">
+
             <div class="col-lg-8">
+        
+         <div class="col-lg-12 d-flex justify-content-end mb-3">
+            <x-search searchRoute="{{ route('topics.search') }}" topicId="{{ null }}" />
+        </div>
+
+
                 <!-- Blog entries-->
                 <div class="accordion" id="accordionExample">
                     {{-- <div class="row"> --}}
@@ -82,6 +87,6 @@
 
         </div>
     </div>
-
+     @include('components.back-button')
 @endsection
 

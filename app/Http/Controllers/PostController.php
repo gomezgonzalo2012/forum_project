@@ -61,9 +61,9 @@ class PostController extends Controller
     // }
     public function store(Request $request){
         $request->validate([
-            'content' =>"required ",
-            'new_topic' => 'required_without:topic_id',
-            'title' =>'required|255',
+            'content' =>"required",
+            'new_topic' => 'required|string|max:255',
+            'title' =>'required|max:255',
             'category' =>'required|array'
         ]);
         try {
@@ -90,21 +90,23 @@ class PostController extends Controller
         }
 
         public function search(Request $request){
-            $query = $request->input('search'); 
-            $query = $request->input('search'); 
-            $posts = Post::where('title', 'LIKE', '%' . $query . '%')->paginate(5);
+            $query = $request->input('search');
+            $topicId = $request->input('topic_id');
+           
+        // Verifica si existe el tema con el id dado
+        $topic = Topic::find($topicId);
 
-             // Obtén el primer tema relacionado o especifica el tema que necesites
-            $topic = Topic::where('description', 'LIKE', '%' . $query . '%')->first();
+        if (!$topic) {
+            // Si no se encuentra el tema, puedes redirigir o mostrar un mensaje de error
+            return redirect()->back()->withErrors(['Tema no encontrado.']);
+        }
+     
 
-            // Si no se encontró un tema, puedes asignar un valor por defecto
-            if (!$topic) {
-                $topic = (object) [
-                    'id' => null,  // O puedes asignar un ID ficticio, como -1, si prefieres
-                    'description' => 'Resultados de Búsqueda'
-                ];
-            }
-
-            return view('topichome', compact('posts', 'topic'));
+        // Filtra los posts por el título y el id del tema
+        $posts = Post::where('title', 'LIKE', '%' . $query . '%')
+                    ->where('topic_id', $topicId)
+                    ->paginate(5);
+      
+        return view('topichome', compact('posts', 'topic'));
         }
 }

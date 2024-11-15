@@ -1,8 +1,9 @@
 @extends('layouts.app2')
 
-@php
+{{-- @php
     $searchRoute = route('posts.search');
-@endphp
+@endphp --}}
+
 
 
 @section("content")
@@ -30,6 +31,14 @@
                 @else
                 <a href="{{route('login')}}" class="btn btn-primary"> Inicia sesión y crear una discusión</a>
             @endauth
+        </div>
+            @php
+            // Definir la ruta de búsqueda y otros parámetros según la lógica de la vista
+                 $searchRoute = route('posts.search') 
+            
+            @endphp
+        <div class="col-lg-12 d-flex justify-content-end mb-3">
+        <x-search searchRoute="{{$searchRoute}}" topicId="{{$topic->id}}" />
         </div>
 
             <!-- Blog entries-->
@@ -93,5 +102,6 @@
             </div>
         </div>
     </div>
+     @include('components.back-button')
 @endsection
 

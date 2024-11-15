@@ -122,5 +122,6 @@
         </div>
     </div>
 </div>
+ @include('components.back-button')
 
 @endsection
