@@ -51,9 +51,10 @@
             </div>
             @endif
             <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+           <ul class="navbar-nav ms-auto d-flex align-items-center gap-3">
                 @if(Auth::check())
                 {{-- Notificaciones --}}
+                <li>
                 <a href="{{route("profile.notifications")}}" type="button" class="btn btn-primary position-relative">
                     <i class="bi bi-bell"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -61,6 +62,7 @@
                       <span class="visually-hidden">Notificaciones sin leer</span>
                     </span>
                 </a>
+                </li>
                   {{-- Nombre de usuario --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
