@@ -57,7 +57,7 @@ class CommentController extends Controller
             case 3: $comment->comment_level = 4;
             break;
             default:
-            return redirect()->back()->with('error', 'No se permite más de 4 niveles de comentarios.');
+            return redirect()->back();
         }
         // dd($comment);
         $comment->save();
