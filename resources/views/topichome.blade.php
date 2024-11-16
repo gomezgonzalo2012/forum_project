@@ -1,10 +1,20 @@
 @extends('layouts.app2')
 
+{{-- @php
+    $searchRoute = route('posts.search');
+@endphp --}}
+
+
+
 @section("content")
 <header class="py-2 bg-light border-bottom mb-4">
     <div class="container">
         <div class="text-start my-2">
-            <h2 class="fw-bolder">Tema: {{$topic->description}}</h4>
+            @if (isset($topic))
+                <h2 class="fw-bolder">{{$topic->description}}</h2>
+            @else
+                <h2 class="fw-bolder">Resultados de Busqueda</h2>
+            @endif
         </div>
     </div>
 </header>
@@ -22,6 +32,14 @@
                 @else
                 <a href="{{route('login')}}" class="btn btn-primary"> Inicia sesión para crear una discusión.</a>
             @endauth
+        </div>
+            @php
+            // Definir la ruta de búsqueda y otros parámetros según la lógica de la vista
+                 $searchRoute = route('posts.search') 
+            
+            @endphp
+        <div class="col-lg-12 d-flex justify-content-end mb-3">
+        <x-search searchRoute="{{$searchRoute}}" topicId="{{$topic->id}}" />
         </div>
 
             <!-- Blog entries-->
@@ -85,5 +103,6 @@
             </div>
         </div>
     </div>
+     @include('components.back-button')
 @endsection
 

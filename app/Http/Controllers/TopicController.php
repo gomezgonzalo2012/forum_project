@@ -20,4 +20,15 @@ class TopicController extends Controller
     return view("topichome", compact('topic', 'posts'));
 }
 
+public function search(Request $request)
+{
+    $query = $request->input('search');
+    $topics = Topic::with('posts')
+    ->where('description', 'LIKE', '%' . $query . '%')
+    ->paginate(5);
+  
+    // $topics = Topic::with('posts')->paginate(5);
+
+    return view('home', compact('topics'));
+}
 }

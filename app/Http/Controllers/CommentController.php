@@ -18,7 +18,7 @@ class CommentController extends Controller
         //dd($request->user_id);
 
         $request->validate([
-            'content' =>'required',
+            'content' =>'required|max:500',
             'user_id'=>'required',
             'post_id'=>'required'
         ]);
@@ -28,14 +28,14 @@ class CommentController extends Controller
         $comment->post_id = $request->post_id;
         $comment->comment_level =1;
         $comment->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Comentario añadido con éxito.');
     }
 
     public function storeChild(Request $request ){
         //dd($request->post_id);
         //dd($request->user_id);
         $request->validate([
-            'content' =>'required',
+            'content' =>'required|max:500',
             'user_id'=>'required',
             'post_id'=>'required',
             'father_comment_id'=>'required',

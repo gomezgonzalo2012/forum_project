@@ -62,30 +62,51 @@ class PostController extends Controller
     public function store(Request $request){
         $request->validate([
             'content' =>"required",
-            'title' =>'required',
+            'new_topic' => 'required|string|max:255',
+            'title' =>'required|max:255',
             'category' =>'required|array'
         ]);
-        if ($request->filled('new_topic')) {
-
-            $topic = Topic::create(['description' => $request->new_topic]);
-            $topic->save();
-            $topic_id = $topic->id; // se setea el topic id si es que se decide crear el tema
-        } else {
-            $topic_id = $request->topic_id;// proviene de la request desde la seccion temas
+        try {
+            if ($request->filled('new_topic')) { 
+                $topic = Topic::create(['description' => $request->new_topic]); 
+                $topic->save(); 
+                $topic_id = $topic->id; // se setea el topic id si es que se decide crear el tema 
+           } else {
+                $topic_id = $request->topic_id; // proviene de la request desde la seccion temas 
+           } 
+            $post = new Post();
+            $post->title = $request->title; 
+            $post->content = $request->content; 
+            $post->user_id = $request->user_id;
+            $post->topic_id = $topic_id; 
+            $post->save(); 
+            $post->categories()->sync($request->category); // asocia la categoria al post 
+           
+            session()->flash("success", "Discucion creada"); 
+            return redirect()->route('Home.index')->with('success', 'Discucion creada con éxito.');
+            } catch (\Exception $e) {
+             return redirect()->back()->with('error', 'Error al crear la discucion: ' . $e->getMessage());
+            }
         }
-        //  dd($request);
-        $post = new Post();
-        $post->title = $request->title;
-        $post->content = $request->content;
-        $post->user_id= $request->user_id;
-        $post->topic_id= $topic_id;
-        //$post->post_state = "active";
-        // dd($post);
 
-        $post->save();
-        $post->categories()->sync($request->category); // asocia la categoria al post
-        session()->flash("success"," Discucion creada");
+        public function search(Request $request){
+            $query = $request->input('search');
+            $topicId = $request->input('topic_id');
+           
+        // Verifica si existe el tema con el id dado
+        $topic = Topic::find($topicId);
 
-        return redirect()->route('Home.index')->with('success','Discucion creada con éxito.');
-    }
+        if (!$topic) {
+            // Si no se encuentra el tema, puedes redirigir o mostrar un mensaje de error
+            return redirect()->back()->withErrors(['Tema no encontrado.']);
+        }
+     
+
+        // Filtra los posts por el título y el id del tema
+        $posts = Post::where('title', 'LIKE', '%' . $query . '%')
+                    ->where('topic_id', $topicId)
+                    ->paginate(5);
+      
+        return view('topichome', compact('posts', 'topic'));
+        }
 }

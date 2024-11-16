@@ -15,6 +15,18 @@
         <div class="row justify-content-center">
 
             <div class="col-lg-7">
+             @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
                 <div class="card shadow-lg border-1 rounded-lg mt-5">
                     <div class="card-body">
                     <!-- Bootstrap 5 starter form -->
@@ -25,26 +37,35 @@
 
                             <!-- title input -->
                             <div class="mb-3">
-                              <label class="form-label" for="title">Titulo</label>
-                              <input class="form-control" id="title" type="text" name="title" placeholder="" data-sb-validations="required" />
-                              <div class="invalid-feedback" data-sb-feedback="title:required">Titulo is required.</div>
+                             <label class="form-label" for="title">Titulo</label> 
+                             <input class="form-control @error('title') is-invalid @enderror" id="title" type="text" name="title" placeholder="" value="{{ old('title') }}" required /> 
+                             @error('title') 
+                             <div class="invalid-feedback">{{ $message }}
+                             </div> 
+                             @enderror
                             <!---- user input -->
                                 <input type="hidden" name="user_id" value="@if(Auth::check()){{ Auth::user()->id }}@endif">
                             </div>
                             @if(isset($topic))
                                 <div class="mb-3">
-                                    <label class="form-label" for="topic">Tema</label>
-                                    <input class="form-control" id="topic" type="text" name="topic" placeholder="" value="{{$topic->description}}" readonly data-sb-validations="required" />
-                                    <div class="invalid-feedback" data-sb-feedback="topic:required">Tema is required.</div>
+                                   <label class="form-label" for="topic">Tema</label> 
+                                   <input class="form-control @error('topic') is-invalid @enderror" id="topic" type="text" name="topic" placeholder="" value="{{ $topic->description }}" readonly required />
+                                    @error('topic') 
+                                    <div class="invalid-feedback">{{ $message }}
+                                    </div>
+                                     @enderror
                                      <!---- topic input -->
                                     <input type="hidden" name="topic_id" value="{{ $topic->id }}" />
                                   </div>
                             @else
                                 <!-- creacion del topic-->
                                 <div class="mb-3">
-                                    <label class="form-label" for="topic">Crea un nuevo tema</label>
-                                    <input class="form-control" id="topic" type="text" name="new_topic" placeholder="" data-sb-validations="required" />
-                                    <div class="invalid-feedback" data-sb-feedback="topic:required">Tema is required.</div>
+                                    <label class="form-label" for="new_topic">Crea un nuevo tema</label> 
+                                    <input class="form-control @error('new_topic') is-invalid @enderror" id="new_topic" type="text" name="new_topic" placeholder="" value="{{ old('new_topic') }}" required/> 
+                                    @error('new_topic') 
+                                    <div class="invalid-feedback">{{ $message }}
+                                    </div> 
+                                    @enderror
                                   </div>
 
                             @endif
@@ -53,13 +74,19 @@
 
                             <div class="mb-3">
                                 <label class="form-label" for="category">Categoría</label>
-                                <select name="category[]" multiple aria-label="Multiple select" id="category" class="form-control">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="invalid-feedback" data-sb-feedback="category:required">Categoria is required.</div>
+                            <select name="category[]" multiple aria-label="Multiple select" id="category" class="form-control @error('category') is-invalid @enderror">
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                                @error('category') 
+                                <div class="invalid-feedback">{{ $message }}
+                                </div> 
+                                @enderror
                             </div>
+                            
                             <!-- content input -->
                             {{-- <div class="mb-3 ">
                               <label class="form-label" for="content">Contenido</label>
@@ -68,8 +95,11 @@
                             </div> --}}
 
                             <div class="mb-3 ">
-                            <input id="content" type="hidden" name="content">
-                                <trix-editor input="content" ></trix-editor>
+                             <input id="content" type="hidden" name="content" value="{{ old('content') }}">
+                            <trix-editor input="content" class="@error('content') is-invalid @enderror"></trix-editor>
+                            @error('content')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                             </div>
                             <!-- Form submit button -->
                             <div class="d-grid">
@@ -87,7 +117,7 @@
 
     </div>
 
-
+ @include('components.back-button')
   <!-- SB Forms JS -->
   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 {{-- @section("css")
