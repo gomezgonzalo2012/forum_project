@@ -2,6 +2,17 @@
 
 @section("content")
 <div class="container mt-4">
+    @if (session('status'))
+    <div class="alert alert-info alert-dismissible fade show col-lg-4" role="alert">
+        {{ session('status') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger col-lg-4" role="alert">{{ session('error') }}</div>
+    @endif
+
     <form class="row g-3" method="POST" action="{{route('admin.storeCategory')}}">
         @csrf
         <div class="col-auto">
@@ -17,23 +28,11 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h5 class="card-title">{{ $cat->name }}</h5>
-                        <a href="#" class="btn btn-secondary">Button</a>
+                        <a href="#" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
-    @if (session('status'))
-    <div class="alert alert-info alert-dismissible fade show col-lg-4" role="alert">
-        {{ session('status') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger col-lg-4" role="alert">{{ session('error') }}</div>
-    @endif
-
-
 </div>
 @endsection

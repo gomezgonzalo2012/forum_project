@@ -50,7 +50,7 @@
                                 </div>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" class="btn btn-primary">Inicia sesión para comentar.</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary mb-2">Inicia sesión para comentar</a>
                         @endauth
 
                         @if (isset($comments))

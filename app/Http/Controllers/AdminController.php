@@ -88,4 +88,5 @@ class AdminController extends Controller
 
         return redirect()->back()->with('status', 'Categoria creada exitosamente.');
     }
+
 }

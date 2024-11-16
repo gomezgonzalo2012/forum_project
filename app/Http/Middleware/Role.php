@@ -16,7 +16,7 @@ class Role
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check() && Auth::user()->user_rol === "admin"){
+        if(Auth::check() && (Auth::user()->user_rol === "admin" || Auth::user()->user_rol === "superAdmin")){
             return $next($request);
         }
         return redirect("/");
