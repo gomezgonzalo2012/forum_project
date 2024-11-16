@@ -24,7 +24,7 @@
                     </nav>
                 </div>
                 @if(Auth::check())
-                    @if(Auth::user()->user_rol=="admin")
+                    @if(Auth::user()->user_rol=="admin" || Auth::user()->user_rol=="superAdmin")
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="bi bi-people"></i></i></div>
                         Moderadores
@@ -34,11 +34,14 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{route('admin.index')}}">Moderar Discusiones</a>
                             <a class="nav-link" href="{{route('admin.createCategory')}}">Agregar Categorias</a>
-                            @if(Auth::user()->user_rol=="superAdmin") <!--solo para super usuario-->
-                            <a class="nav-link" href="{{route('admin.createCategory')}}">Agregar Moderadores</a>
-                            @endif
+
                         </nav>
                     </div>
+                    @if(Auth::user()->user_rol=="superAdmin") <!--solo para super usuario-->
+                    <div class="nav-link">
+                    <i class="bi bi-shield-lock"></i><a class="nav-link" href="{{route('superAdmin.index')}}">Administrar Moderadores</a>
+                    </div>
+                    @endif
                     @endif
 
                 @endif

@@ -56,6 +56,6 @@ class User extends Authenticatable
     }
     public function isModerator(){
 
-        return $this->user_rol === "admin";
+        return $this->user_rol === "admin" || $this->user_rol === "superAdmin";
     }
 }

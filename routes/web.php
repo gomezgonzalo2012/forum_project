@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TopicController;
 use App\Models\Category;
 use App\Models\Comment;
@@ -58,14 +59,21 @@ Route::middleware('auth')->group(function(){
 
 });
 
-Route::middleware('auth','role:admin')->group(function(){ //'role:admin'
+Route::middleware('auth','role:admin,superAdmin')->group(function(){ //'role:admin'
     Route::post('/admin/updateStatus', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
     Route::get('/admin/createCategory',[AdminController::class,'createCategory'])->name('admin.createCategory');
     Route::post('/admin/storeCategory',[AdminController::class,'storeCategory'])->name('admin.storeCategory');
     Route::get('/admin/posts',[AdminController::class,'index'])->name('admin.index');
     Route::get('/admin/{post}',[AdminController::class,'show'])->name('admin.show');
+    // super admin
+    Route::get("/superAdmin",[SuperAdminController::class, 'index'])->name('superAdmin.index');
+    Route::put("/superAdmin/{user_id}",[SuperAdminController::class, 'updateRole'])->name('superAdmin.updateRole');
+});
+Route::middleware('auth')->group(function(){
 
 });
+
+
 
 
 
