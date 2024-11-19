@@ -8,7 +8,6 @@
     <!-- Wrapper container -->
 
 
-
     <div class="container py-3">
         <!-- Side widgets-->
 
@@ -30,27 +29,32 @@
                 <div class="card shadow-lg border-1 rounded-lg mt-5">
                     <div class="card-body">
                     <!-- Bootstrap 5 starter form -->
+                    <form action="{{ isset($postEdit) ? route('posts.update', $postEdit->id) : route('posts.store') }}" method="POST">
+                        @csrf
+                        @if(isset($postEdit))
+                            @method('PUT')
+                        @endif
+                        {{-- <form action="{{route('posts.store')}}" method="POST"> --}}
 
-                        <form action="{{route('posts.store')}}" method="POST">
-
-                            @csrf
+                            {{-- @csrf --}}
 
                             <!-- title input -->
                             <div class="mb-3">
-                             <label class="form-label" for="title">Titulo</label> 
-                             <input class="form-control @error('title') is-invalid @enderror" id="title" type="text" name="title" placeholder="" value="{{ old('title') }}" required /> 
-                             @error('title') 
-                             <div class="invalid-feedback">{{ $message }}
-                             </div> 
+                             <label class="form-label" for="title">Titulo</label>
+                             <input class="form-control @error('title') is-invalid @enderror" id="title" type="text" name="title" placeholder=""
+                                value="{{ old('title', $postEdit->title ?? '') }}"  required />
+                             @error('title')
+                                <div class="invalid-feedback">{{ $message }}
+                                </div>
                              @enderror
                             <!---- user input -->
                                 <input type="hidden" name="user_id" value="@if(Auth::check()){{ Auth::user()->id }}@endif">
                             </div>
                             @if(isset($topic))
                                 <div class="mb-3">
-                                   <label class="form-label" for="topic">Tema</label> 
+                                   <label class="form-label" for="topic">Tema</label>
                                    <input class="form-control @error('topic') is-invalid @enderror" id="topic" type="text" name="topic" placeholder="" value="{{ $topic->description }}" readonly required />
-                                    @error('topic') 
+                                    @error('topic')
                                     <div class="invalid-feedback">{{ $message }}
                                     </div>
                                      @enderror
@@ -60,13 +64,14 @@
                             @else
                                 <!-- creacion del topic-->
                                 <div class="mb-3">
-                                    <label class="form-label" for="new_topic">Crea un nuevo tema</label> 
-                                    <input class="form-control @error('new_topic') is-invalid @enderror" id="new_topic" type="text" name="new_topic" placeholder="" value="{{ old('new_topic') }}" required/> 
-                                    @error('new_topic') 
+                                    <label class="form-label" for="new_topic">Crea un nuevo tema</label>
+                                    <input class="form-control @error('new_topic') is-invalid @enderror" id="new_topic" type="text" name="new_topic"
+                                    placeholder="" value="{{ old('new_topic', $postEdit->topic->description ?? '') }}" required/>
+                                    @error('new_topic')
                                     <div class="invalid-feedback">{{ $message }}
-                                    </div> 
+                                    </div>
                                     @enderror
-                                  </div>
+                                </div>
 
                             @endif
 
@@ -81,12 +86,12 @@
                                 @endforeach
                             </select>
 
-                                @error('category') 
+                                @error('category')
                                 <div class="invalid-feedback">{{ $message }}
-                                </div> 
+                                </div>
                                 @enderror
                             </div>
-                            
+
                             <!-- content input -->
                             {{-- <div class="mb-3 ">
                               <label class="form-label" for="content">Contenido</label>
@@ -95,7 +100,7 @@
                             </div> --}}
 
                             <div class="mb-3 ">
-                             <input id="content" type="hidden" name="content" value="{{ old('content') }}">
+                             <input id="content" type="hidden" name="content" value="{{ old('content', $postEdit->content ?? '') }}">
                             <trix-editor input="content" class="@error('content') is-invalid @enderror"></trix-editor>
                             @error('content')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -103,7 +108,9 @@
                             </div>
                             <!-- Form submit button -->
                             <div class="d-grid">
-                              <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button>
+                              <button class="btn btn-primary btn-lg" id="submitButton" type="submit">
+                                {{ isset($postEdit) ? 'Actualizar discusión' : 'Guardar discusión' }}
+                              </button>
                             </div>
 
                         </form>

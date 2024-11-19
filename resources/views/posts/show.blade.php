@@ -28,6 +28,10 @@
                 <!-- Post content-->
                 <section class="mb-5 card card-body">
                     <p class="fs-5 mb-4">{!! $singlePost->content !!}</p>
+                    @if(Auth::check() && Auth::user()->id == $singlePost->user_id)
+                    <a href="{{ route('posts.edit', $singlePost->id) }}" class="text-muted position-absolute small"
+                        style="bottom: 0; right: 0; padding: 5px; margin: 10px;">Editar</a>
+                    @endif
                 </section>
             </article>
 
@@ -94,18 +98,27 @@
                                                     @endif
                                                 </div>
                                             </div>
+                                            @php
+                                                $userReaction = $comment->userReaction(Auth::id());
+
+                                            @endphp
 
                                             <p class="card-text mt-2">{{ $comment->content }}</p>
                                             <hr>
                                             <div class="d-flex justify-content-start align-items-center mt-3">
-                                                <button class="ms-2 btn like-button" data-comment-id="{{ $comment->id }}">
+                                                {{-- componente like y dislike --}}
+                                                @include('components.reaction.reactionButton',['comment'=>$comment])
+                                                {{-- <button class="ms-2 btn like-button" data-comment-id="{{ $comment->id }}" data-reaction="likes"
+                                                    @if($userReaction && $userReaction->reaction === 'likes') disabled @endif>
                                                     <i class="bi bi-hand-thumbs-up"></i>
                                                     <span id="like-count-{{ $comment->id }}">{{ $comment->likes }}</span>
                                                 </button>
-                                                <button class="ms-2 btn dislike-button" data-comment-id="{{ $comment->id }}">
+
+                                                <button class="ms-2 btn dislike-button" data-comment-id="{{ $comment->id }}" data-reaction="dislikes"
+                                                    @if($userReaction && $userReaction->reaction === 'dislikes') disabled @endif>
                                                     <i class="bi bi-hand-thumbs-down"></i>
                                                     <span id="dislike-count-{{ $comment->id }}">{{ $comment->dislikes }}</span>
-                                                </button>
+                                                </button> --}}
                                                 <div>
                                                     <button type="button" class="btn fw-bold btn-sm" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">Responder</button>
                                                     <i class="bi bi-reply-all"></i>

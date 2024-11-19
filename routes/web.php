@@ -39,7 +39,9 @@ Route::middleware('auth')->group(function(){
     Route::post('/posts',[PostController::class,'store'])->name('posts.store');
     Route::get('/posts/create',[PostController::class,'create'])->name('posts.create');
     Route::get('/posts/createWithTopic',[PostController::class,'createWithTopic'])->name('posts.createWithTopic');
-    //Route::get('/posts/edit', [PostController::class, 'edit'])->name('posts.edit');
+    //edit
+    Route::get('/posts/edit/{post_id}',[PostController::class, 'edit'])->name("posts.edit");
+    Route::put('/posts/update/{post_id}',[PostController::class, 'update'])->name("posts.update");
 });
 
 
@@ -59,6 +61,11 @@ Route::middleware('auth')->group(function(){
     Route::post('/comments/{commentId}/like', [CommentController::class, "like"])->name("comments.like");
     Route::post('/comments/{commentId}/dislike', [CommentController::class, "dislike"])->name("comments.dislike");
     Route::post('/comments/{commentId}/reactToComment', [CommentController::class, "reactToComment"])->name("comments.reactToComment");
+    //edit
+
+    Route::put('/comments/update/{commentId}', [CommentController::class, "update"])->name("comments.update");
+
+
 
 });
 

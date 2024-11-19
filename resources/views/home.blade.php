@@ -21,11 +21,11 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-lg-8">
-        
-         <div class="col-lg-12 d-flex justify-content-end mb-3">
-            <x-search searchRoute="{{ route('topics.search') }}" topicId="{{ null }}" />
-        </div>
+        <div class="col-lg-8">
+
+            <div class=" justify-content-end mb-3">
+                <x-search searchRoute="{{ route('topics.search') }}" topicId="{{ null }}" />
+            </div>
 
 
                 <!-- Blog entries-->
@@ -37,7 +37,7 @@
                                 link="{{route('topics.index',['id'=>$topic->id])}}"
                                 postCount="{{count($topic->posts)}}"
                                 lastDate="{{ $topic->posts->first() ? $topic->posts->first()->created_at->locale('es_ES')->diffForHumans() : 'Sin actividad' }}">
-                                
+
                                 </x-topics.topic-item>
 
                             @endforeach
