@@ -23,10 +23,17 @@
                         @endforeach
                     </nav>
                 </div>
+
+
                 @if(Auth::check())
+                    {{-- mis discuciones --}}
+                    <div class="nav-link">
+                        <i class="bi bi-journal-plus"></i><a class="nav-link" href="{{route('posts.myPosts')}}">Mis Discuiones</a>
+                    </div>
+                    {{-- usuarios con priviledios (admin o superAdmin) --}}
                     @if(Auth::user()->user_rol=="admin" || Auth::user()->user_rol=="superAdmin")
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="bi bi-people"></i></i></div>
+                        <div class="sb-nav-link-icon"><i class="bi bi-people"></i></div>
                         Moderadores
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -38,18 +45,24 @@
                         </nav>
                     </div>
                     @if(Auth::user()->user_rol=="superAdmin") <!--solo para super usuario-->
-                    <div class="nav-link">
-                    <i class="bi bi-shield-lock"></i><a class="nav-link" href="{{route('superAdmin.index')}}">Administrar Moderadores</a>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsSuperUser" aria-expanded="false" aria-controls="collapseLayoutsSuperUser">
+                        <div class="sb-nav-link-icon"><i class="bi bi-shield-lock"></i></div>
+                        Super Usuario
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayoutsSuperUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="{{route('superAdmin.index')}}">Administrar Usuarios</a>
+
+                        </nav>
                     </div>
+
                     @endif
                     @endif
 
                 @endif
             </div>
         </div>
-        <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div>
-            Start Bootstrap
-        </div>
+
     </nav>
 </div>

@@ -3,7 +3,7 @@
 @section("content")
 <!-- Page content-->
 <div class="container mt-5">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-lg-8">
             <!-- Post content-->
             <article>
@@ -90,7 +90,7 @@
                             </form>
                             @endif
                         @else
-                            <p>There is a problem searching for comments</p>
+                            <p>Problema al buscar comentarios</p>
                         @endif
                     </div>
                 </div>

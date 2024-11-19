@@ -40,7 +40,10 @@
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
                 <!-- Barra de búsqueda -->
                 <div class="flex-grow-1 me-3">
-                    <x-search searchRoute="{{route('posts.search')}}" topicId="{{$topic->id}}" />
+                    @php
+                        $param = 'título de la discusión'
+                    @endphp
+                    <x-search searchRoute="{{route('posts.search')}}" topicId="{{$topic->id}} " searchParam="{{$param}}"/>
                 </div>
 
                 <!-- Botón dependiendo del estado de autenticación -->
@@ -83,23 +86,9 @@
             <!-- Side widgets-->
             <div class="col-lg-4">
 
-                <!-- Categories widget-->
+                @component('components.posts.most-active-posts')
+                @endcomponent
 
-                <x-categories.categories-card
-
-                    :categories="$categories"
-                 />
-
-                <!-- Side widget-->
-                <div class="card mb-4">
-                    <div class="card-header">Más Populares</div>
-                    @foreach ($popularPosts as $pop )
-                    <div class="ms-3">
-                        <p><a href="{{route('posts.show',['post'=>$pop->id])}}" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">{{$pop->title}}</a></p>
-                    </div>
-                    @endforeach
-
-                </div>
             </div>
         </div>
     </div>

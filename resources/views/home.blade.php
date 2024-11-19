@@ -24,7 +24,10 @@
         <div class="col-lg-8">
 
             <div class=" justify-content-end mb-3">
-                <x-search searchRoute="{{ route('topics.search') }}" topicId="{{ null }}" />
+                @php
+                    $param = 'nombre del tema'
+                @endphp
+                <x-search searchRoute="{{ route('topics.search') }}" topicId="{{ null }} " searchParam="{{$param}}"/>
             </div>
 
 
@@ -52,37 +55,9 @@
             <!-- Side widgets-->
             <div class="col-lg-4">
 
-                <!-- Categories widget-->
+                @component('components.posts.most-active-posts')
+                @endcomponent
 
-                {{-- <x-categories.categories-card
-
-                    :categories="$categories"
-                 /> --}}
-
-                <!-- Side widget-->
-                <div class="card mb-4">
-
-                    <div class="card-header"> <i class="bi bi-fire"></i> Dicusiones más activas</div>
-                    @foreach ($popularPosts as $pop )
-                            <div class="card mb-3 border-0 border-bottom">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            {{-- <h5 class="card-title mb-1"> --}}
-                                                <p><a href="{{route('posts.show',['post'=>$pop->id])}}" class="text-dark text-decoration-none">{{$pop->title}}</a></p>
-                                            {{-- </h5> --}}
-                                        </div>
-                                        <div class="text-end">
-                                            <!-- Contador de respuestas y fecha de actividad -->
-                                            <div class="text-muted small"><i class="bi bi-reply-all"></i> {{count($pop->comments)}}</div>
-                                            <div class="text-muted small"> Ultima actividad {{$pop->comments->first() ? $pop->comments->first()->created_at->locale('es_ES')->diffForHumans() : 'Sin actividad'}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    @endforeach
-
-                </div>
             </div>
 
         </div>

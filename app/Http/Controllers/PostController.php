@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use function Symfony\Component\Clock\now;
 
@@ -58,9 +59,7 @@ class PostController extends Controller
         return view('posts.create', compact('topic'));
     }
 
-    // public function createWithTopic($topic_id){
-    //     return view('posts.create', compact('topic_id'));
-    // }
+
     public function store(Request $request){
         $request->validate([
             'content' =>"required",
@@ -145,4 +144,18 @@ class PostController extends Controller
 
         return view('topichome', compact('posts', 'topic'));
         }
+
+        public function myPosts()
+        {
+            if (!Auth::check()) {
+                return redirect()->back()->with('error', 'Debes iniciar sesión para ver tus posts.');
+            }
+            $myPosts = Post::where('user_id', Auth::id())
+                ->orderBy('created_at', 'desc')
+                ->with(['comments', 'user'])
+                ->paginate(10);
+            // dd($myPosts);
+            return view('posts.my-posts', compact('myPosts'));
+        }
+
 }

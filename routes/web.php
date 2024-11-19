@@ -42,6 +42,9 @@ Route::middleware('auth')->group(function(){
     //edit
     Route::get('/posts/edit/{post_id}',[PostController::class, 'edit'])->name("posts.edit");
     Route::put('/posts/update/{post_id}',[PostController::class, 'update'])->name("posts.update");
+    // "mis posts"
+    Route::get('/posts/misPosts',[PostController::class, 'myPosts'])->name("posts.myPosts");
+
 });
 
 
@@ -71,8 +74,12 @@ Route::middleware('auth')->group(function(){
 
 Route::middleware('auth','role:admin,superAdmin')->group(function(){ //'role:admin'
     Route::post('/admin/updateStatus', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
+    // categorias
     Route::get('/admin/createCategory',[AdminController::class,'createCategory'])->name('admin.createCategory');
     Route::post('/admin/storeCategory',[AdminController::class,'storeCategory'])->name('admin.storeCategory');
+    Route::get('/admin/editCategory/{category_id}',[AdminController::class,'editCategory'])->name('admin.editCategory');
+    Route::put('/admin/updateCategory/{category_id}',[AdminController::class,'updateCategory'])->name('admin.updateCategory');
+
     Route::get('/admin/posts',[AdminController::class,'index'])->name('admin.index');
     Route::get('/admin/{post}',[AdminController::class,'show'])->name('admin.show');
     // super admin

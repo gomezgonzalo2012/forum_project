@@ -5,40 +5,34 @@
 
 @section('title')
 @section('content')
-    <!-- Wrapper container -->
-
-
     <div class="container py-3">
-        <!-- Side widgets-->
-
         <div class="row justify-content-center">
-
             <div class="col-lg-7">
-             @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+                @if(!isset($topic))
+                <div class="alert alert-success " role="alert">
+                    Puedes crear un nuevo tema aquí, o puedes dirigirte al  <a class="text-decoration-none " href="{{route('Home.index')}}">Inicio</a> y buscar el tema donde te gustaría publicar tu discusión.
+                  </div>
+                @endif
+                @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
-            @if(session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
                 <div class="card shadow-lg border-1 rounded-lg mt-5">
                     <div class="card-body">
                     <!-- Bootstrap 5 starter form -->
                     <form action="{{ isset($postEdit) ? route('posts.update', $postEdit->id) : route('posts.store') }}" method="POST">
-                        @csrf
-                        @if(isset($postEdit))
-                            @method('PUT')
-                        @endif
-                        {{-- <form action="{{route('posts.store')}}" method="POST"> --}}
-
-                            {{-- @csrf --}}
-
-                            <!-- title input -->
+                            @csrf
+                            @if(isset($postEdit))
+                                @method('PUT')
+                            @endif
                             <div class="mb-3">
                              <label class="form-label" for="title">Titulo</label>
                              <input class="form-control @error('title') is-invalid @enderror" id="title" type="text" name="title" placeholder=""
@@ -127,9 +121,7 @@
  @include('components.back-button')
   <!-- SB Forms JS -->
   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-{{-- @section("css")
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
---}}
+
 @endsection
 
 @section("js")

@@ -27,8 +27,8 @@ class AppServiceProvider extends ServiceProvider
 
         $popularPosts = Post::withCount('comments') // Cuenta los comentarios relacionados y agrega la columna comments_count
         ->orderBy('comments_count', 'desc')    // Ordena por la cantidad de comentarios en orden descendente
-        ->take(5)                              // Puedes limitar la cantidad de posts más comentados (por ejemplo, 5)
-        ->get();                               // Obtener los resultados
+        ->take(10)
+        ->get();
 
         // Comparte los datos con las vistas
         View::share('popularPosts', $popularPosts);

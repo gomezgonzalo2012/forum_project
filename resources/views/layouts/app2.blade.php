@@ -29,32 +29,11 @@
             <a class="navbar-brand ps-3" href="{{route('Home.index')}}">@yield('brandName',"The Forum Project")</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            {{-- @php
-                if(isset($topic)){
-                 $searchRoute = route('posts.search');
-                }
-                 $searchRoute = route('topics.search');
-              
-            @endphp
-            
-           <form action="{{ $searchRoute }}" method="GET" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    @if(isset($topic))
-                      <input type="hidden" name="topic_id" value="{{ $topic->id }}" />
-                    @endif
-                      <input class="form-control" name="search" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                     <button class="btn btn-primary" id="btnNavbarSearch" type="submit"><i class="fas fa-search"></i></button>
-                 </div>
-            </form> --}}
-            @if(!Auth::check())
-                <div class="ms-auto d-flex align-items-center">
-                <a href="{{ route('login') }}" class="btn btn-primary me-2">Inicia sesión</a>
-                <a href="{{ route('register') }}" class="btn btn-primary">Registrarse</a>
-            </div>
-            @endif
+
+
             <!-- Navbar-->
            <ul class="navbar-nav ms-auto d-flex align-items-center gap-3">
+
                 @if(Auth::check())
                 {{-- Notificaciones --}}
                 <li>
@@ -92,6 +71,12 @@
                         </li>
                     </ul>
                 </li>
+                @else
+                <div class="ms-auto me-3">
+                <a href="{{ route('login') }}" class="btn btn-primary me-2">Iniciar sesión</a>
+                <a href="{{ route('register') }}" class="btn btn-primary">Registrarse</a>
+                </div>
+
                 @endif
             </ul>
         </nav>
@@ -106,13 +91,9 @@
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
+                        <div class="d-flex align-items-center justify-content-center small">
+                            <div class="text-muted">Copyright &copy; The Forum Project 2024</div>
+
                         </div>
                     </div>
                 </footer>

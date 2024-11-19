@@ -17,8 +17,8 @@
             class="form-control"
             name="search"
             type="text"
-            placeholder="Search for..."
-            aria-label="Search for..."
+            placeholder="Buscar por {{$searchParam}}"
+            aria-label="Buscar por {{$searchParam}}"
             aria-describedby="btnNavbarSearch"
         />
         <button class="btn btn-primary" id="btnNavbarSearch" type="submit">
