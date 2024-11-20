@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string("title")->nullable(false);
             $table->text("content")->nullable(false);
             $table->string('post_state')->default('active');
+            $table->unsignedBigInteger('user_id'); // Clave foránea
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
