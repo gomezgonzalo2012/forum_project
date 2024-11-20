@@ -17,12 +17,7 @@
                     <small><span class="badge bg-secondary">Moderador</span></small>
                 @endif
             </div>
-            {{-- <div class="d-flex justify-content-end mt-2">
-                @component('components.admin.admin-btn', ['text' => 'habilitar', 'action' => '1', 'commentId' => $child->id])
-                @endcomponent
-                @component('components.admin.admin-btn', ['text' => 'deshabilitar', 'action' => '0', 'commentId' => $child->id])
-                @endcomponent
-            </div> --}}
+
               {{-- Checkbox para seleccionar comentarios a desactivar --}}
               @if ( $child->comment_state === 'activo')
                 <div class="d-flex justify-content-end mt-2">

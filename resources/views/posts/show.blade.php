@@ -102,23 +102,17 @@
                                                 $userReaction = $comment->userReaction(Auth::id());
 
                                             @endphp
-
-                                            <p class="card-text mt-2">{{ $comment->content }}</p>
+                                            {{-- Manejo de contenido suspendido --}}
+                                             @if ($comment->comment_state == "desactivo")
+                                                <p class="card-text mt-2 alert alert-info "style="width: 28rem;">Este comentario fue suspendido por un moderador. </p>
+                                            @else
+                                                <p class="card-text mt-2 ms-5" id="comment-content-{{ $comment->id }}">{{ $comment->content }}</p>
+                                            @endif
                                             <hr>
                                             <div class="d-flex justify-content-start align-items-center mt-3">
                                                 {{-- componente like y dislike --}}
                                                 @include('components.reaction.reactionButton',['comment'=>$comment])
-                                                {{-- <button class="ms-2 btn like-button" data-comment-id="{{ $comment->id }}" data-reaction="likes"
-                                                    @if($userReaction && $userReaction->reaction === 'likes') disabled @endif>
-                                                    <i class="bi bi-hand-thumbs-up"></i>
-                                                    <span id="like-count-{{ $comment->id }}">{{ $comment->likes }}</span>
-                                                </button>
 
-                                                <button class="ms-2 btn dislike-button" data-comment-id="{{ $comment->id }}" data-reaction="dislikes"
-                                                    @if($userReaction && $userReaction->reaction === 'dislikes') disabled @endif>
-                                                    <i class="bi bi-hand-thumbs-down"></i>
-                                                    <span id="dislike-count-{{ $comment->id }}">{{ $comment->dislikes }}</span>
-                                                </button> --}}
                                                 <div>
                                                     <button type="button" class="btn fw-bold btn-sm" data-bs-toggle="collapse" href="#collapseComment{{ $comment->id }}" aria-expanded="false" aria-controls="collapseComment{{ $comment->id }}">Responder</button>
                                                     <i class="bi bi-reply-all"></i>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -86,38 +87,7 @@ Route::middleware('auth','role:admin,superAdmin')->group(function(){ //'role:adm
     Route::get("/superAdmin",[SuperAdminController::class, 'index'])->name('superAdmin.index');
     Route::put("/superAdmin/{user_id}",[SuperAdminController::class, 'updateRole'])->name('superAdmin.updateRole');
 });
-Route::middleware('auth')->group(function(){
 
-});
-
-
-
-
-
-Route::get("/posteos/{post}", function($post){
-    $userName = Post::findOrFail($post)->user->name;
-    return $userName;
-});
-
-
-
-
-// Route::get('/categoria', function () {
-//     $category = new Category();
-//     $category->name = 'FrontEnd';
-//     $category->save();
-//     return $category;
-// });
-// Route::get('/categoria', function () {
-//     $post= Post::find(10);
-//     $category = Category::find(2);
-//     $post->categories()->attach($category->id);
-//     return $post;
-// });
-Route::get('/categoria', function () {
-        $post= Post::where('id',10)->with('categories')->first();
-
-        return $post;
-    });
+Route::get('/category/{category_id}', [CategoryController::class, "categoryWithPosts"])->name('category.withPosts');
 
 require __DIR__.'/auth.php';

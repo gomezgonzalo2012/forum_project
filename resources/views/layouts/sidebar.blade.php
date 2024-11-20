@@ -19,7 +19,7 @@
                 <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         @foreach ($categories as $category )
-                        <a class="nav-link" href="#">{{$category->name}}</a>
+                        <a class="nav-link" href="{{route('category.withPosts', $category->id)}}">{{$category->name}}</a>
                         @endforeach
                     </nav>
                 </div>

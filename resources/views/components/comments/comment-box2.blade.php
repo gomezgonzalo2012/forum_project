@@ -13,7 +13,7 @@
             @endif
         </div>
 
-        {{-- Manejo de contenido suspendido --}}
+        {{-- manejo de contenido suspendido --}}
         @if ($child->comment_state == "desactivo")
             <p class="card-text mt-2 alert alert-info "style="width: 28rem;">Este comentario fue suspendido por un moderador. </p>
         @else
@@ -80,13 +80,10 @@
     <script>
         let bandera = null; // Inicializamos la variable bandera
 
-        // Esta función gestionará el modo de edición y respuesta
         function setAction(action, commentId) {
-            // Limpiamos cualquier otro formulario abierto
             document.querySelectorAll('.collapse').forEach(element => element.classList.remove('show'));
 
             if (action === 'editar') {
-                // Activamos el formulario de edición
                 document.getElementById('edit-form-' + commentId).classList.add('show');
                 document.getElementById('comment-content-' + commentId).style.display = 'none'; // Ocultamos el comentario original
                 bandera = 'editar'; // Establecemos la bandera como "editar"
@@ -97,7 +94,6 @@
             }
         }
 
-        // Aquí podemos realizar alguna validación si es necesario para asegurarnos que no se activan ambos formularios al mismo tiempo.
     </script>
 
 @endforeach
