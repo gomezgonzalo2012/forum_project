@@ -48,7 +48,7 @@
                  </div>
             </form> --}}
             @if(!Auth::check())
-                <div class="ms-auto d-flex align-items-center">
+    <div class="ms-auto d-flex justify-content-end align-items-center">
                 <a href="{{ route('login') }}" class="btn btn-primary me-2">Inicia sesión</a>
                 <a href="{{ route('register') }}" class="btn btn-primary">Registrarse</a>
             </div>
