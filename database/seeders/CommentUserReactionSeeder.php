@@ -8,16 +8,20 @@ use App\Models\CommentUserReaction;
 use App\Models\Comment;
 use App\Models\User;
 
+
 class CommentUserReactionSeeder extends Seeder
 {
     public function run()
     {
-        $comment = Comment::first();
-        $user = User::where('user_rol', 'moderator')->first();
+        $user = User::where('user_rol', 'admin')->first();
+        $comments = Comment::all();
 
-        CommentUserReaction::create([
-            'comment_id' => $comment->id,
-            'user_id' => $user->id,
-        ]);
+        foreach ($comments as $comment) {
+            CommentUserReaction::create([
+                'comment_id' => $comment->id,
+                'user_id' => $user->id,
+            ]);
+        }
     }
 }
+

@@ -18,7 +18,7 @@ class CommentController extends Controller
         //dd($request->user_id);
 
         $request->validate([
-            'content' =>'required|max:500',
+            'content' =>'required|max:255',
             'user_id'=>'required',
             'post_id'=>'required'
         ]);
@@ -35,7 +35,7 @@ class CommentController extends Controller
         //dd($request->post_id);
         //dd($request->user_id);
         $request->validate([
-            'content' =>'required|max:500',
+            'content' =>'required|max:255',
             'user_id'=>'required',
             'post_id'=>'required',
             'father_comment_id'=>'required',
@@ -64,6 +64,27 @@ class CommentController extends Controller
         $this->createNotification($comment); // crear notificaciion
         return redirect()->back(); // agregar mensaje
     }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'content' => 'required|string|max:255',
+        ]);
+
+        $comment = Comment::findOrFail($id);
+
+        // solo el usuario dueño del commentario puede editarlo
+        if ($comment->user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'No tienes permiso para editar este comentario.');
+        }
+
+        $comment->update([
+            'content' => $request->content,
+        ]);
+
+        return redirect()->back()->with('success', 'Comentario actualizado con éxito.');
+    }
+
 
     // likes y dislikes
 

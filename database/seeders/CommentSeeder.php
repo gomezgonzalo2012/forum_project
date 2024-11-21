@@ -12,29 +12,34 @@ class CommentSeeder extends Seeder
 {
     public function run()
     {
-        $post = Post::first();
         $user = User::where('user_rol', 'user')->first();
+        $posts = Post::all();
 
-        $comment1 = Comment::create([
-            'content' => 'This is a great post!',
-            'user_id' => $user->id,
-            'post_id' => $post->id,
-            'likes' => 10,
-            'dislikes' => 2,
-            'comment_state' => 'activo',
-            'comment_level'=>1
-        ]);
+        for ($i = 1; $i <= 20; $i++) {
+            $post = $posts[$i % $posts->count()];
+            $comment = Comment::create([
+                'content' => "Este es un comentario sobre el post: {$post->title}",
+                'user_id' => $user->id,
+                'post_id' => $post->id,
+                'likes' => rand(0, 50),
+                'dislikes' => rand(0, 30),
+                'comment_state' => $i % 2 == 0 ? 'activo' : 'desactivo',
+                'comment_level' => 1,
+            ]);
 
-        $comment2 = Comment::create([
-            'content' => 'I disagree with this post.',
-            'user_id' => $user->id,
-            'post_id' => $post->id,
-            'father_comment_id' => $comment1->id,
-            'likes' => 2,
-            'dislikes' => 15,
-            'comment_state' => 'activo',
-            'comment_level'=>2
-
-        ]);
+            if ($i % 3 == 0) { // Cada 3 comentarios, agregar un hijo
+                Comment::create([
+                    'content' => "Respuesta al comentario {$comment->id}",
+                    'user_id' => $user->id,
+                    'post_id' => $post->id,
+                    'father_comment_id' => $comment->id,
+                    'likes' => rand(0, 20),
+                    'dislikes' => rand(0, 15),
+                    'comment_state' => 'activo',
+                    'comment_level' => 2,
+                ]);
+            }
+        }
     }
 }
+

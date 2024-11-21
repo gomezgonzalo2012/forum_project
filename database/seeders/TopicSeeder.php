@@ -10,8 +10,25 @@ class TopicSeeder extends Seeder
 {
     public function run()
     {
-        Topic::create(['description' => 'Technology', 'icon' => 'tech-icon.png']);
-        Topic::create(['description' => 'Science', 'icon' => 'science-icon.png']);
-        Topic::create(['description' => 'Health', 'icon' => 'health-icon.png']);
+        $topics = [
+            'Inteligencia Artificial',
+            'Machine Learning',
+            'Desarrollo Web',
+            'Programación Avanzada',
+            'Redes y Seguridad',
+            'Bases de Datos',
+            'Cloud Computing',
+            'Computación Cuántica',
+            'Big Data',
+            'Ciberseguridad',
+        ];
+
+        foreach ($topics as $topic) {
+            Topic::create([
+                'description' => $topic,
+                'icon' => 'icono-default.png',
+            ]);
+        }
     }
 }
+

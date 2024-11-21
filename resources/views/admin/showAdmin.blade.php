@@ -1,9 +1,9 @@
 @extends('layouts.app2')
-
+@section('title','Moderación de Discuciones')
 @section("content")
 <!-- Page content-->
 <div class="container mt-5">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-lg-8">
             <!-- Post content-->
             <article>
@@ -61,6 +61,24 @@
                                                     <small><span class="badge bg-secondary">Moderador</span></small>
                                                 @endif
                                             </div>
+                                            {{-- Checkbox para seleccionar comentarios a desactivar --}}
+                                                @if ( $comment->comment_state === 'activo')
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <label>
+                                                        <input type="checkbox" name="comments_to_deactivate[]" value="{{ $comment->id }}"
+                                                            {{ $comment->comment_state === 'desactivo' ? 'checked' : '' }}>
+                                                        desactivar
+                                                    </label>
+                                                </div>
+                                                @else
+                                                <div class="d-flex justify-content-end mt-2">
+                                                    <label>
+                                                        <input type="checkbox" name="comments_to_activate[]" value="{{ $comment->id }}"
+                                                            {{ $comment->comment_state === 'activo' ? 'checked' : '' }}>
+                                                        activar
+                                                    </label>
+                                                </div>
+                                                @endif
 
                                             <p class="card-text mt-2">{{ $comment->content }}</p>
                                             <hr> <!--Moderador no puede dar likes-->
@@ -90,7 +108,7 @@
                             </form>
                             @endif
                         @else
-                            <p>There is a problem searching for comments</p>
+                            <p>Problema al buscar comentarios</p>
                         @endif
                     </div>
                 </div>
