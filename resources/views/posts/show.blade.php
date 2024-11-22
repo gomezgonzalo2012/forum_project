@@ -13,6 +13,9 @@
                         $singlePost = $postShow[0];
                         $comments = $postShow[1];
                     @endphp
+
+                    
+
                     <!-- Post title-->
                     <h3 class="fw-bolder">{{ $singlePost->title }}</h3>
                     <!-- Post content-->
@@ -21,7 +24,7 @@
                     </div>
                     <!-- Post categories-->
                     @foreach ($singlePost->categories as $category)
-                        <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ $category->name }}</a>
+                        <a class="badge bg-secondary text-decoration-none link-light" href="{{route('category.withPosts', $category->id)}}">{{ $category->name }}</a>
                     @endforeach
                 </header>
 

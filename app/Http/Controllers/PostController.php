@@ -94,8 +94,16 @@ class PostController extends Controller
         }
 
         public function edit($id){
-            $postEdit = Post::where('id',$id)->first();
+            // $postEdit = Post::where('id',$id)->first();
+            // $topic = Topic::find($postEdit->topic->id);
+            $postEdit = Post::where('id', $id)->first();
+
+             if ($postEdit->created_at->addMinutes(1) < now()) {
+            return redirect()->back()->with('error', 'El tiempo para editar este post ha expirado.');
+               }
+
             $topic = Topic::find($postEdit->topic->id);
+
             // if($post->created_at > now()->add(60)->min){
 
             // }
@@ -118,7 +126,7 @@ class PostController extends Controller
                 $post->save();
                 $post->categories()->sync($request->category); // asocia la categoria al post
 
-                return redirect()->back()->with('success', 'Discusión acualizada con éxito.');
+                return redirect()->route('posts.show',$post_id)->with('success', 'Discusión acualizada con éxito.');
                 } catch (\Exception $e) {
                  return redirect()->back()->with('error', 'Error al actualizar la discusión: ' . $e->getMessage());
                 }

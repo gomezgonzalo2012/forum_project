@@ -90,4 +90,5 @@ Route::middleware('auth','role:admin,superAdmin')->group(function(){ //'role:adm
 
 Route::get('/category/{category_id}', [CategoryController::class, "categoryWithPosts"])->name('category.withPosts');
 
+
 require __DIR__.'/auth.php';
