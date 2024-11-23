@@ -11,7 +11,7 @@
 </header>
 @if (session('status'))
 <div class="alert alert-info alert-dismissible fade show col-lg-4" role="alert">
-    {{ session('status') }}
+
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
