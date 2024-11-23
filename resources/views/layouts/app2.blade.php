@@ -8,26 +8,44 @@
         <meta name="author" content="" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title', "The Forum Project")</title>
+
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="{{asset('build/assets/css/styles.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/styles.css')}}">
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+        {{-- favicon  --}}
+        <link rel="shortcut icon" type="image/png" href="{{ asset('assets/messages_5825874.png') }}">
+        <link rel="shortcut icon" sizes="192x192" href="{{ asset('assets/messages_5825874.png') }}">
+        @yield("styles")
+        {{-- para seleccion multiple --}}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+        <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+        {{-- bootstrap icons --}}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-forum-project">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="{{route('posts.index')}}">@yield('brandName',"The Forum Project")</a>
+            <a class="navbar-brand ps-3" href="{{route('Home.index')}}">@yield('brandName',"The Forum Project")</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </form>
+
+
             <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+           <ul class="navbar-nav ms-auto d-flex align-items-center gap-3">
+
                 @if(Auth::check())
+                {{-- Notificaciones --}}
+                <li>
+                <a href="{{route("profile.notifications")}}" type="button" class="btn btn-primary position-relative">
+                    <i class="bi bi-bell"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {{Auth::user()->unreadNotifications->count()}}
+                      <span class="visually-hidden">Notificaciones sin leer</span>
+                    </span>
+                </a>
+                </li>
+                  {{-- Nombre de usuario --}}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ Auth::user()->name }}</a>
@@ -38,6 +56,7 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
                         </li>
+
                         <li><hr class="dropdown-divider" /></li>
                         <li ><!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
@@ -52,6 +71,12 @@
                         </li>
                     </ul>
                 </li>
+                @else
+                <div class="ms-auto me-3">
+                <a href="{{ route('login') }}" class="btn btn-primary me-2">Iniciar sesión</a>
+                <a href="{{ route('register') }}" class="btn btn-primary">Registrarse</a>
+                </div>
+
                 @endif
             </ul>
         </nav>
@@ -59,31 +84,32 @@
             @include("layouts.sidebar")
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container fluid px-4">
+                    <div class="container-fluid px-4">
                         @yield('content')
                     </div>
 
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
+                        <div class="d-flex align-items-center justify-content-center small">
+                            <div class="text-muted">Copyright &copy; The Forum Project 2024</div>
+
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        @yield("scripts")
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="{{asset('build/assets/js/scripts.js')}}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="{{asset('build/assets/demo/chart-area-demo.js')}}"></script>
-        <script src="{{asset('build/assets/demo/chart-bar-demo.js')}}"></script>
+        <script src="{{asset('assets/js/scripts.js')}}"></script>
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script> --}}
+        <script src="{{asset('assets/demo/chart-area-demo.js')}}"></script>
+        <script src="{{asset('assets/demo/chart-bar-demo.js')}}"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script> --}}
         {{-- <script src="js/datatables-simple-demo.js"></script> --}}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+
     </body>
 </html>
