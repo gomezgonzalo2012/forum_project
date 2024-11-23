@@ -1,7 +1,7 @@
-<button id="volver" onclick="window.history.back()"><small><i class="bi bi-arrow-return-left"></i> Volver</small></button>
+<button id="volver"  onclick="window.history.back()"><small><i class="bi bi-arrow-return-left"></i> </small></button>
 <style>#volver {
   position: fixed;
-  top: 90px;
+  top: 70px;
   left: 240px;
   padding: 10px 20px;
   font-size: 16px;

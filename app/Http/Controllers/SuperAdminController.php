@@ -18,7 +18,12 @@ class SuperAdminController extends Controller
     }
 
     public function updateRole($user_id, Request $request){
-        if(!Auth::user()->user_rol === "superAdmin"){
+        // dd(Auth::user()->id == $user_id) ;
+        if(!Auth::user()->user_rol === "superAdmin"){ // valida que solo lo haga el admin
+            return redirect()->back();
+        }
+        if(Auth::user()->id == $user_id){
+            // valida que no pueda cambiar su propio rol
             return redirect()->back();
         }
         $request->validate([

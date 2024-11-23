@@ -18,7 +18,6 @@
         alert alert-warning
     @endif">
 
-    {{-- <a href="{{ $link }}"><img class="card-img-top" src="{{ $image }}" alt="..."></a> --}}
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <div class="">

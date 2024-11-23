@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -39,7 +40,12 @@ Route::middleware('auth')->group(function(){
     Route::post('/posts',[PostController::class,'store'])->name('posts.store');
     Route::get('/posts/create',[PostController::class,'create'])->name('posts.create');
     Route::get('/posts/createWithTopic',[PostController::class,'createWithTopic'])->name('posts.createWithTopic');
-    //Route::get('/posts/edit', [PostController::class, 'edit'])->name('posts.edit');
+    //edit
+    Route::get('/posts/edit/{post_id}',[PostController::class, 'edit'])->name("posts.edit");
+    Route::put('/posts/update/{post_id}',[PostController::class, 'update'])->name("posts.update");
+    // "mis posts"
+    Route::get('/posts/misPosts',[PostController::class, 'myPosts'])->name("posts.myPosts");
+
 });
 
 
@@ -59,51 +65,30 @@ Route::middleware('auth')->group(function(){
     Route::post('/comments/{commentId}/like', [CommentController::class, "like"])->name("comments.like");
     Route::post('/comments/{commentId}/dislike', [CommentController::class, "dislike"])->name("comments.dislike");
     Route::post('/comments/{commentId}/reactToComment', [CommentController::class, "reactToComment"])->name("comments.reactToComment");
+    //edit
+
+    Route::put('/comments/update/{commentId}', [CommentController::class, "update"])->name("comments.update");
+
+
 
 });
 
 Route::middleware('auth','role:admin,superAdmin')->group(function(){ //'role:admin'
     Route::post('/admin/updateStatus', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
+    // categorias
     Route::get('/admin/createCategory',[AdminController::class,'createCategory'])->name('admin.createCategory');
     Route::post('/admin/storeCategory',[AdminController::class,'storeCategory'])->name('admin.storeCategory');
+    Route::get('/admin/editCategory/{category_id}',[AdminController::class,'editCategory'])->name('admin.editCategory');
+    Route::put('/admin/updateCategory/{category_id}',[AdminController::class,'updateCategory'])->name('admin.updateCategory');
+
     Route::get('/admin/posts',[AdminController::class,'index'])->name('admin.index');
     Route::get('/admin/{post}',[AdminController::class,'show'])->name('admin.show');
     // super admin
     Route::get("/superAdmin",[SuperAdminController::class, 'index'])->name('superAdmin.index');
     Route::put("/superAdmin/{user_id}",[SuperAdminController::class, 'updateRole'])->name('superAdmin.updateRole');
 });
-Route::middleware('auth')->group(function(){
 
-});
+Route::get('/category/{category_id}', [CategoryController::class, "categoryWithPosts"])->name('category.withPosts');
 
-
-
-
-
-Route::get("/posteos/{post}", function($post){
-    $userName = Post::findOrFail($post)->user->name;
-    return $userName;
-});
-
-
-
-
-// Route::get('/categoria', function () {
-//     $category = new Category();
-//     $category->name = 'FrontEnd';
-//     $category->save();
-//     return $category;
-// });
-// Route::get('/categoria', function () {
-//     $post= Post::find(10);
-//     $category = Category::find(2);
-//     $post->categories()->attach($category->id);
-//     return $post;
-// });
-Route::get('/categoria', function () {
-        $post= Post::where('id',10)->with('categories')->first();
-
-        return $post;
-    });
 
 require __DIR__.'/auth.php';
