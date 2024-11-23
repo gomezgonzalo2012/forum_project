@@ -53,7 +53,7 @@ Este paso creará las tablas en la base de datos y precargará datos iniciales:
 ```bash
 php artisan migrate --seed
 ```
-### 6. Servir la aplicación
+### 5. Servir la aplicación
 Ejecuta el servidor de desarrollo:
 ```bash
 php artisan serve
