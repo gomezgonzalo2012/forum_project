@@ -118,5 +118,14 @@ class AdminController extends Controller
 
         return redirect()->back()->with('status', 'Categoria creada exitosamente.');
     }
+    public function searchPosts(Request $request){
+        $query = $request->input('search');
+
+        // filtro los posts por el título y el id del tema
+        $posts = Post::where('title', 'LIKE', '%' . $query . '%')
+                ->paginate(10);
+
+        return view('admin.indexAdmin', compact('posts'));
+    }
 
 }

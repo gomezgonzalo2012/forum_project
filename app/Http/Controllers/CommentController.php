@@ -71,8 +71,12 @@ class CommentController extends Controller
             'content' => 'required|string|max:255',
         ]);
 
-        $comment = Comment::findOrFail($id);
 
+
+        $comment = Comment::findOrFail($id);
+        if ($comment->created_at->addMinutes(30) < now()) {
+            return redirect()->back()->with('error', 'El tiempo para editar este comentario ha expirado.');
+        }
         // solo el usuario dueño del commentario puede editarlo
         if ($comment->user_id !== Auth::id()) {
             return redirect()->back()->with('error', 'No tienes permiso para editar este comentario.');

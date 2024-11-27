@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text("content")->nullable(false);
             $table->integer("votes")->default(0);
-            $table->string("comment_state")->default("active");
+            $table->string("comment_state")->default("activo");
             $table->unsignedBigInteger("user_id");
             $table->unsignedBigInteger("post_id");
             $table->timestamps();

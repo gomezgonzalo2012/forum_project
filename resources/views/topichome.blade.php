@@ -23,20 +23,7 @@
     <div class="container">
         <div class="row">
 
-            {{-- <div class="text-center my-5">
-                <h3 class="fw-bolder">{{$topic->description}}</h3>
-            </div> --}}
-            {{-- <div class="d-flex justify-content-end mb-3">
-            @auth
-                <a href="{{route('posts.createWithTopic',['topic_id'=>$topic->id])}}" class="btn btn-primary" >Crear discusión</a>
-                @else
-                <a href="{{route('login')}}" class="btn btn-primary"> Inicia sesión para crear una discusión.</a>
-            @endauth
-            </div>
 
-            <div class="col-lg-12 d-flex justify-content-end mb-3">
-            <x-search searchRoute="{{route('posts.search')}}" topicId="{{$topic->id}}" />
-            </div> --}}
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
                 <!-- Barra de búsqueda -->
                 <div class="flex-grow-1 me-3">
