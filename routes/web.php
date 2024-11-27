@@ -74,15 +74,20 @@ Route::middleware('auth')->group(function(){
 });
 
 Route::middleware('auth','role:admin,superAdmin')->group(function(){ //'role:admin'
+    // actualizar estado de commentario (activo o desactivo)
     Route::post('/admin/updateStatus', [AdminController::class, 'updateStatus'])->name('admin.updateStatus');
+
     // categorias
     Route::get('/admin/createCategory',[AdminController::class,'createCategory'])->name('admin.createCategory');
     Route::post('/admin/storeCategory',[AdminController::class,'storeCategory'])->name('admin.storeCategory');
     Route::get('/admin/editCategory/{category_id}',[AdminController::class,'editCategory'])->name('admin.editCategory');
     Route::put('/admin/updateCategory/{category_id}',[AdminController::class,'updateCategory'])->name('admin.updateCategory');
 
+    // vistas de moderador
     Route::get('/admin/posts',[AdminController::class,'index'])->name('admin.index');
+    Route::get('/admin/search',[AdminController::class,'searchPosts'])->name('admin.searchPosts');
     Route::get('/admin/{post}',[AdminController::class,'show'])->name('admin.show');
+
     // super admin
     Route::get("/superAdmin",[SuperAdminController::class, 'index'])->name('superAdmin.index');
     Route::put("/superAdmin/{user_id}",[SuperAdminController::class, 'updateRole'])->name('superAdmin.updateRole');

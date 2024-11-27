@@ -1,16 +1,15 @@
 @extends('layouts.app2')
 
-
 @section("content")
 <header class="py-5 bg-light border-bottom mb-4">
     <div class="container">
         <div class="text-center my-5">
             @if(Auth::check())
-            <h1 class="fw-bolder">Hi! {{ Auth::user()->name }}, Welcome to The Forum Project!</h1>
+            <h1 class="fw-bolder">Hola! {{ Auth::user()->name }}, bienvenido a The Forum Project!</h1>
             @else
-            <h1 class="fw-bolder">Welcome to The Forum Project!</h1>
+            <h1 class="fw-bolder">bienvenido a The Forum Project!</h1>
             @endif
-            <p class="lead mb-0">This forum was created by the amazing programming team Gonzalo & Lourdes</p>
+            <p class="lead mb-0">Este foro fue creado por el increible equipo de programadores Gonzalo & Lourdes</p>
         </div>
     </div>
 </header>
@@ -27,6 +26,7 @@
                 @php
                     $param = 'nombre del tema'
                 @endphp
+                {{-- form busqueda por tema --}}
                 <x-search searchRoute="{{ route('topics.search') }}" topicId="{{ null }} " searchParam="{{$param}}"/>
             </div>
 

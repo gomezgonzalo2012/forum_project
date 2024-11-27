@@ -62,6 +62,7 @@
                                                 @endif
                                             </div>
                                             {{-- Checkbox para seleccionar comentarios a desactivar --}}
+
                                                 @if ( $comment->comment_state === 'activo')
                                                 <div class="d-flex justify-content-end mt-2">
                                                     <label>
@@ -70,7 +71,7 @@
                                                         desactivar
                                                     </label>
                                                 </div>
-                                                @else
+                                                @elseif ($comment->comment_state === 'desactivo')
                                                 <div class="d-flex justify-content-end mt-2">
                                                     <label>
                                                         <input type="checkbox" name="comments_to_activate[]" value="{{ $comment->id }}"

@@ -22,6 +22,14 @@
             </div>
 
             <div class="col-lg-8">
+                <div class=" justify-content-end mb-3">
+                    @php
+                        $param = 'Titulo'
+                    @endphp
+                    {{-- form busqueda por tema --}}
+                    <x-search searchRoute="{{ route('admin.searchPosts') }}" topicId="{{ null }}" searchParam="{{$param}}"/>
+                </div>
+
                 <div class="alert alert-success " role="alert">
                     Las discusiones están ordenadas según la votación de los usuarios.
                     Las discusiones con mayor número de dislikes estarán más arriba y son las que requerirán de tu moderación.
