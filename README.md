@@ -1,7 +1,7 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 
-## About The Forum Project
+##  The Forum Project
 
 ## Proyecto de Laravel con Blade, Breeze y MySQL
 
@@ -26,14 +26,7 @@ Sigue los pasos a continuación para configurar y ejecutar el proyecto:
 git clone <URL-del-repositorio>
 cd <nombre-del-proyecto>
 ```
-### 2. Instalar dependencias
-Ejecuta los siguientes comandos para instalar las dependencias de PHP y JavaScript:
-```bash
-composer install
-npm install
-npm run dev
-```
-### 3. Configurar el archivo .env
+### 2. Configurar el archivo .env
 Copia el archivo .env.example y renómbralo como .env:
 ```bash
 cp .env.example .env
@@ -48,6 +41,15 @@ DB_USERNAME=<usuario_de_tu_base_de_datos>
 DB_PASSWORD=<contraseña_de_tu_base_de_datos>
 
 ```
+### 3. Instalar dependencias
+Ejecuta los siguientes comandos para instalar las dependencias de PHP y JavaScript:
+```bash
+composer install
+npm install
+npm run dev
+```
+
+
 ### 4. Ejecutar las migraciones y seeders
 Este paso creará las tablas en la base de datos y precargará datos iniciales:
 ```bash
