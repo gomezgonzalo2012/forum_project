@@ -98,7 +98,7 @@ class PostController extends Controller
             // $topic = Topic::find($postEdit->topic->id);
             $postEdit = Post::where('id', $id)->first();
 
-             if ($postEdit->created_at->addMinutes(1) < now()) {
+             if ($postEdit->created_at->addMinutes(60) < now()) {
             return redirect()->back()->with('error', 'El tiempo para editar este post ha expirado.');
                }
 
@@ -136,21 +136,20 @@ class PostController extends Controller
             $query = $request->input('search');
             $topicId = $request->input('topic_id');
 
-        // Verifica si existe el tema con el id dado
-        $topic = Topic::find($topicId);
+            // Verifica si existe el tema con el id dado
+            $topic = Topic::find($topicId);
 
-        if (!$topic) {
-            // Si no se encuentra el tema, puedes redirigir o mostrar un mensaje de error
-            return redirect()->back()->withErrors(['Tema no encontrado.']);
-        }
+            if (!$topic) {
+                return redirect()->back()->withErrors(['Tema no encontrado.']);
+            }
 
 
-        // Filtra los posts por el título y el id del tema
-        $posts = Post::where('title', 'LIKE', '%' . $query . '%')
+            // filtro los posts por el título y el id del tema
+            $posts = Post::where('title', 'LIKE', '%' . $query . '%')
                     ->where('topic_id', $topicId)
                     ->paginate(5);
 
-        return view('topichome', compact('posts', 'topic'));
+            return view('topichome', compact('posts', 'topic'));
         }
 
         public function myPosts()

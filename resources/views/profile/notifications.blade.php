@@ -16,7 +16,8 @@
                     <p class="mb-1">
                         {{ $notif->data['message'] }} <strong>{{ $notif->data['content'] }}</strong>
                     </p>
-                    <small class="text-muted">{{ $notif->created_at->format('F j, Y') }}</small>
+                    <small class="text-muted">{{ $notif->created_at->format('M j, Y, h:i A') }}</small>
+
                 </div>
                 <div class="ms-auto">
                     <a class="btn btn-outline-secondary btn-sm" href="{{ route('posts.show', ['post' => $notif->data['post_id']]) }}">Ir</a>
