@@ -10,6 +10,11 @@ Este proyecto es una aplicación desarrollada en Laravel que utiliza Blade como 
 
 Incluye migraciones, seeders y usuarios precargados para un inicio rápido.
 
+
+
+### Doocumentacion : enlace
+https://docs.google.com/document/d/1gp3gpBjOufh3TTJj2rprUggxdZs4rtmcE467lSdTMsA/edit?tab=t.0#heading=h.srzcx67b8q13
+
 ## Requisitos previos
 Asegúrate de tener las siguientes herramientas instaladas en tu sistema:
 - **PHP** >= 8.1  
@@ -87,4 +92,5 @@ Contraseña: password
 
 #### post/show.blade.php
 ![Texto alternativo](imagenes_md/vista_post_show.png "")
+
 
