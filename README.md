@@ -36,6 +36,8 @@ Copia el archivo .env.example y renómbralo como .env:
 ```bash
 cp .env.example .env
 ```
+
+
 Edita el archivo .env para configurar los detalles de tu base de datos:
 ```bash
 DB_CONNECTION=mysql
@@ -51,7 +53,9 @@ Ejecuta los siguientes comandos para instalar las dependencias de PHP y JavaScri
 ```bash
 composer install
 npm install
+npm run build
 npm run dev
+php artisan key:generate
 ```
 
 
